@@ -1,0 +1,7 @@
+.hls.yaml
+cache/**
+.stash/**
+static/**
+temp/**
+example/**
+build/**

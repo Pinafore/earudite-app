@@ -1,0 +1,1584 @@
+[2024-05-09 16:25:33,426] INFO - server: Instantiated server with instance path '/home/ubuntu/quizzr_server'
+[2024-05-09 16:25:33,427] INFO - server: Creating instance directory...
+[2024-05-09 16:25:33,427] INFO - server: Created instance directory
+[2024-05-09 16:25:33,427] INFO - server: Configuring server instance...
+[2024-05-09 16:25:33,427] INFO - server: Using config with name 'sv_config.json'
+[2024-05-09 16:25:33,427] INFO - server: Config at path '/home/ubuntu/quizzr_server/config/sv_config.json' not found
+[2024-05-09 16:25:33,720] INFO - server: Finished configuring server instance
+[2024-05-09 16:25:33,720] INFO - server: Initializing third-party services...
+[2024-05-09 16:25:33,720] INFO - server: MongoDB Database Name = 'QuizzrDatabase'
+[2024-05-09 16:25:33,721] INFO - server: Firebase Blob Root = 'production_new_long'
+[2024-05-09 16:25:33,721] INFO - server: Environment set to 'production'
+[2024-05-09 16:25:34,336] INFO - server: Initialized third-party services
+[2024-05-09 16:25:34,345] INFO - server: Started pre-screening program
+[2024-05-09 16:25:34,346] ERROR - server: Could not start mailer: 'subject' not configured
+[2024-05-09 16:25:34,346] INFO - server: No default rate limits defined. Skipping global rate limiter initialization
+[2024-05-09 16:25:34,346] INFO - server: Initializing per-user rate limiter...
+[2024-05-09 16:25:34,346] INFO - server: Finished initializing per-user rate limiter
+[2024-05-09 16:25:34,346] INFO - server: Completed initialization
+[2024-05-09 16:25:34,363] INFO - server.prescreen: Initializing...
+[2024-05-09 16:25:34,672] INFO - server.prescreen: Finished initialization. Entering main loop
+[2024-05-09 16:29:25,462] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 16:29:25,462] INFO - server: Decoding token...
+[2024-05-09 16:30:57,386] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 16:30:57,386] INFO - server: Decoding token...
+[2024-05-09 16:30:57,436] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 16:30:57,436] INFO - server: Decoding token...
+[2024-05-09 16:31:06,063] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 16:31:06,064] INFO - server: Decoding token...
+[2024-05-09 16:31:57,409] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 16:32:08,006] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 16:32:08,007] INFO - server: Decoding token...
+[2024-05-09 16:32:55,326] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 16:36:23,293] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 16:36:23,293] INFO - server: Decoding token...
+[2024-05-09 16:36:32,915] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 16:36:32,915] INFO - server: Decoding token...
+[2024-05-09 16:49:18,361] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 16:49:18,361] INFO - server: Decoding token...
+[2024-05-09 16:49:49,339] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 16:56:10,255] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 16:56:10,255] INFO - server: Decoding token...
+[2024-05-09 16:56:55,202] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 16:56:55,202] INFO - server: Decoding token...
+[2024-05-09 16:57:00,640] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 17:00:53,142] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:00:53,142] INFO - server: Decoding token...
+[2024-05-09 17:01:34,554] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 17:12:49,052] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:12:49,052] INFO - server: Decoding token...
+[2024-05-09 17:13:02,626] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 17:13:28,744] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:13:28,745] INFO - server: Decoding token...
+[2024-05-09 17:13:50,412] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 17:16:23,801] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:16:23,801] INFO - server: Decoding token...
+[2024-05-09 17:16:23,805] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:16:23,808] INFO - server: Decoding token...
+[2024-05-09 17:16:26,406] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:16:26,406] INFO - server: Decoding token...
+[2024-05-09 17:16:58,917] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 17:17:04,524] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:17:04,524] INFO - server: Decoding token...
+[2024-05-09 17:17:52,333] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 17:18:06,336] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:18:06,336] INFO - server: Decoding token...
+[2024-05-09 17:18:52,102] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 17:19:02,240] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:19:02,240] INFO - server: Decoding token...
+[2024-05-09 17:19:04,387] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:19:04,387] INFO - server: Decoding token...
+[2024-05-09 17:19:12,326] ERROR - server: Audio not found. Aborting
+[2024-05-09 17:20:56,099] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 17:39:53,250] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:39:53,250] INFO - server: Decoding token...
+[2024-05-09 17:40:16,202] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:40:16,202] INFO - server: Decoding token...
+[2024-05-09 17:40:29,993] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 17:52:51,349] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:52:51,350] INFO - server: Decoding token...
+[2024-05-09 17:52:54,389] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:52:54,389] INFO - server: Decoding token...
+[2024-05-09 17:53:16,603] ERROR - server: Query parameter 'a' is undefined. Aborting
+[2024-05-09 17:53:41,294] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 17:56:39,712] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:56:39,713] INFO - server: Decoding token...
+[2024-05-09 17:56:41,771] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:56:41,772] INFO - server: Decoding token...
+[2024-05-09 17:57:20,173] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 17:57:20,173] INFO - server: Decoding token...
+[2024-05-09 17:57:27,817] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 19:10:07,578] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:10:07,578] INFO - server: Decoding token...
+[2024-05-09 19:10:23,211] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:10:23,211] INFO - server: Decoding token...
+[2024-05-09 19:10:54,935] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 19:24:11,137] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:24:11,137] INFO - server: Decoding token...
+[2024-05-09 19:24:12,314] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:24:12,314] INFO - server: Decoding token...
+[2024-05-09 19:24:59,623] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 19:25:28,738] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:25:28,738] INFO - server: Decoding token...
+[2024-05-09 19:25:33,022] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:25:33,022] INFO - server: Decoding token...
+[2024-05-09 19:26:21,875] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 19:38:05,423] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:38:05,423] INFO - server: Decoding token...
+[2024-05-09 19:38:13,828] ERROR - server: Audio not found. Aborting
+[2024-05-09 19:38:28,936] ERROR - server: Query parameter 'a' is undefined. Aborting
+[2024-05-09 19:38:33,744] ERROR - server: Query parameter 'a' is undefined. Aborting
+[2024-05-09 19:38:34,166] ERROR - server: Query parameter 'a' is undefined. Aborting
+[2024-05-09 19:39:01,902] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 19:41:03,592] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:41:03,593] INFO - server: Decoding token...
+[2024-05-09 19:41:25,349] ERROR - server: Query parameter 'a' is undefined. Aborting
+[2024-05-09 19:41:26,791] ERROR - server: Query parameter 'a' is undefined. Aborting
+[2024-05-09 19:41:52,959] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 19:52:12,570] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:52:12,570] INFO - server: Decoding token...
+[2024-05-09 19:52:14,926] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:52:14,926] INFO - server: Decoding token...
+[2024-05-09 19:52:56,472] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 19:53:33,765] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:53:33,765] INFO - server: Decoding token...
+[2024-05-09 19:53:35,085] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 19:53:35,085] INFO - server: Decoding token...
+[2024-05-09 19:54:09,816] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:01:13,564] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:01:13,564] INFO - server: Decoding token...
+[2024-05-09 20:01:14,576] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:01:14,576] INFO - server: Decoding token...
+[2024-05-09 20:02:01,510] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:03:03,031] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:03:03,031] INFO - server: Decoding token...
+[2024-05-09 20:03:05,029] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:03:05,029] INFO - server: Decoding token...
+[2024-05-09 20:03:44,229] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:06:56,423] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:06:56,423] INFO - server: Decoding token...
+[2024-05-09 20:07:01,739] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:07:01,739] INFO - server: Decoding token...
+[2024-05-09 20:07:36,054] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:08:33,184] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:08:33,184] INFO - server: Decoding token...
+[2024-05-09 20:10:55,844] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:10:55,844] INFO - server: Decoding token...
+[2024-05-09 20:10:56,791] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:10:56,792] INFO - server: Decoding token...
+[2024-05-09 20:11:35,847] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:11:39,489] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:11:39,489] INFO - server: Decoding token...
+[2024-05-09 20:12:22,155] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:12:24,608] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:12:24,608] INFO - server: Decoding token...
+[2024-05-09 20:13:05,635] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:13:08,106] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:13:08,106] INFO - server: Decoding token...
+[2024-05-09 20:14:10,963] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:15:01,758] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:15:01,758] INFO - server: Decoding token...
+[2024-05-09 20:15:02,769] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:15:02,769] INFO - server: Decoding token...
+[2024-05-09 20:15:33,455] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:19:23,639] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:19:23,640] INFO - server: Decoding token...
+[2024-05-09 20:20:14,122] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:20:14,122] INFO - server: Decoding token...
+[2024-05-09 20:20:16,748] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:20:16,749] INFO - server: Decoding token...
+[2024-05-09 20:21:02,278] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:21:07,373] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:21:07,373] INFO - server: Decoding token...
+[2024-05-09 20:21:11,373] ERROR - server: Audio not found. Aborting
+[2024-05-09 20:21:57,453] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:21:57,454] INFO - server: Decoding token...
+[2024-05-09 20:21:59,772] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:21:59,772] INFO - server: Decoding token...
+[2024-05-09 20:22:00,713] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:22:04,773] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:22:04,774] INFO - server: Decoding token...
+[2024-05-09 20:22:36,194] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:23:40,479] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:23:40,479] INFO - server: Decoding token...
+[2024-05-09 20:23:42,054] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:23:42,054] INFO - server: Decoding token...
+[2024-05-09 20:24:14,498] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:25:42,153] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:25:42,153] INFO - server: Decoding token...
+[2024-05-09 20:25:44,292] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:25:44,292] INFO - server: Decoding token...
+[2024-05-09 20:26:13,709] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:28:38,624] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:28:38,624] INFO - server: Decoding token...
+[2024-05-09 20:28:40,490] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:28:40,490] INFO - server: Decoding token...
+[2024-05-09 20:28:44,467] ERROR - server: Audio not found. Aborting
+[2024-05-09 20:29:21,525] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:31:55,515] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:31:55,515] INFO - server: Decoding token...
+[2024-05-09 20:32:16,245] ERROR - server: Audio not found. Aborting
+[2024-05-09 20:32:48,536] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:35:43,494] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:35:43,494] INFO - server: Decoding token...
+[2024-05-09 20:35:44,275] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:35:44,275] INFO - server: Decoding token...
+[2024-05-09 20:36:13,749] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:36:13,749] INFO - server: Decoding token...
+[2024-05-09 20:36:20,722] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:36:55,793] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:36:55,793] INFO - server: Decoding token...
+[2024-05-09 20:37:20,631] ERROR - server: Audio not found. Aborting
+[2024-05-09 20:37:50,510] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 20:41:39,211] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:41:39,211] INFO - server: Decoding token...
+[2024-05-09 20:41:39,792] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:41:39,792] INFO - server: Decoding token...
+[2024-05-09 20:42:50,773] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:42:50,773] INFO - server: Decoding token...
+[2024-05-09 20:42:52,706] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:42:52,707] INFO - server: Decoding token...
+[2024-05-09 20:44:10,854] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:44:10,855] INFO - server: Decoding token...
+[2024-05-09 20:44:12,201] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:44:12,202] INFO - server: Decoding token...
+[2024-05-09 20:58:26,371] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:58:26,371] INFO - server: Decoding token...
+[2024-05-09 20:58:30,362] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 20:58:30,362] INFO - server: Decoding token...
+[2024-05-09 20:59:04,745] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 21:08:48,710] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:08:48,710] INFO - server: Decoding token...
+[2024-05-09 21:09:30,801] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 21:28:56,823] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:28:56,823] INFO - server: Decoding token...
+[2024-05-09 21:29:31,364] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:29:31,364] INFO - server: Decoding token...
+[2024-05-09 21:29:34,358] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:29:34,359] INFO - server: Decoding token...
+[2024-05-09 21:29:35,438] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:29:35,438] INFO - server: Decoding token...
+[2024-05-09 21:29:38,463] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 21:29:39,661] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:29:39,661] INFO - server: Decoding token...
+[2024-05-09 21:30:04,175] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:04,175] INFO - server: Decoding token...
+[2024-05-09 21:30:06,238] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:06,239] INFO - server: Decoding token...
+[2024-05-09 21:30:09,493] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:09,494] INFO - server: Decoding token...
+[2024-05-09 21:30:10,790] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:10,790] INFO - server: Decoding token...
+[2024-05-09 21:30:12,082] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 21:30:12,177] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:12,177] INFO - server: Decoding token...
+[2024-05-09 21:30:14,037] ERROR - server: Audio not found. Aborting
+[2024-05-09 21:30:14,137] ERROR - server: Audio not found. Aborting
+[2024-05-09 21:30:41,648] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:41,649] INFO - server: Decoding token...
+[2024-05-09 21:30:43,202] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:43,203] INFO - server: Decoding token...
+[2024-05-09 21:30:46,155] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:46,155] INFO - server: Decoding token...
+[2024-05-09 21:30:47,508] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:47,508] INFO - server: Decoding token...
+[2024-05-09 21:30:51,153] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:51,154] INFO - server: Decoding token...
+[2024-05-09 21:30:51,953] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:51,953] INFO - server: Decoding token...
+[2024-05-09 21:30:53,328] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:53,328] INFO - server: Decoding token...
+[2024-05-09 21:30:54,224] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:54,224] INFO - server: Decoding token...
+[2024-05-09 21:30:55,120] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 21:30:55,526] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:30:55,526] INFO - server: Decoding token...
+[2024-05-09 21:32:38,254] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 21:32:47,955] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:32:47,955] INFO - server: Decoding token...
+[2024-05-09 21:33:28,099] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 21:33:31,308] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:33:31,308] INFO - server: Decoding token...
+[2024-05-09 21:34:00,325] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 21:34:17,426] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:34:17,426] INFO - server: Decoding token...
+[2024-05-09 21:34:18,556] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:34:18,556] INFO - server: Decoding token...
+[2024-05-09 21:35:23,598] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:35:23,598] INFO - server: Decoding token...
+[2024-05-09 21:35:25,270] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:35:25,271] INFO - server: Decoding token...
+[2024-05-09 21:35:27,423] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:35:27,423] INFO - server: Decoding token...
+[2024-05-09 21:35:28,160] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:35:28,160] INFO - server: Decoding token...
+[2024-05-09 21:35:40,345] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:35:40,345] INFO - server: Decoding token...
+[2024-05-09 21:35:41,308] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:35:41,308] INFO - server: Decoding token...
+[2024-05-09 21:35:42,089] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:35:42,089] INFO - server: Decoding token...
+[2024-05-09 21:35:42,854] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:35:42,854] INFO - server: Decoding token...
+[2024-05-09 21:35:44,137] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:35:44,138] INFO - server: Decoding token...
+[2024-05-09 21:35:45,595] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:35:45,595] INFO - server: Decoding token...
+[2024-05-09 21:35:46,411] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:35:46,412] INFO - server: Decoding token...
+[2024-05-09 21:36:13,440] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:36:13,440] INFO - server: Decoding token...
+[2024-05-09 21:36:14,311] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:36:14,311] INFO - server: Decoding token...
+[2024-05-09 21:36:15,006] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:36:15,007] INFO - server: Decoding token...
+[2024-05-09 21:36:15,656] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:36:15,656] INFO - server: Decoding token...
+[2024-05-09 21:37:25,544] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:37:25,544] INFO - server: Decoding token...
+[2024-05-09 21:37:27,425] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:37:27,425] INFO - server: Decoding token...
+[2024-05-09 21:37:59,858] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 21:38:06,245] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:06,246] INFO - server: Decoding token...
+[2024-05-09 21:38:08,313] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:08,313] INFO - server: Decoding token...
+[2024-05-09 21:38:10,057] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:10,057] INFO - server: Decoding token...
+[2024-05-09 21:38:10,804] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:10,804] INFO - server: Decoding token...
+[2024-05-09 21:38:11,321] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:11,321] INFO - server: Decoding token...
+[2024-05-09 21:38:11,774] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:11,774] INFO - server: Decoding token...
+[2024-05-09 21:38:12,738] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:12,738] INFO - server: Decoding token...
+[2024-05-09 21:38:13,208] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:13,208] INFO - server: Decoding token...
+[2024-05-09 21:38:14,065] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:14,065] INFO - server: Decoding token...
+[2024-05-09 21:38:14,894] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:14,894] INFO - server: Decoding token...
+[2024-05-09 21:38:15,729] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:15,729] INFO - server: Decoding token...
+[2024-05-09 21:38:16,556] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:16,556] INFO - server: Decoding token...
+[2024-05-09 21:38:17,358] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:17,358] INFO - server: Decoding token...
+[2024-05-09 21:38:18,153] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:18,154] INFO - server: Decoding token...
+[2024-05-09 21:38:20,075] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:20,075] INFO - server: Decoding token...
+[2024-05-09 21:38:20,872] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:20,872] INFO - server: Decoding token...
+[2024-05-09 21:38:21,685] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:21,686] INFO - server: Decoding token...
+[2024-05-09 21:38:22,511] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:22,511] INFO - server: Decoding token...
+[2024-05-09 21:38:23,394] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:23,394] INFO - server: Decoding token...
+[2024-05-09 21:38:24,106] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:24,106] INFO - server: Decoding token...
+[2024-05-09 21:38:24,991] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:24,991] INFO - server: Decoding token...
+[2024-05-09 21:38:25,706] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:25,706] INFO - server: Decoding token...
+[2024-05-09 21:38:28,327] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:28,328] INFO - server: Decoding token...
+[2024-05-09 21:38:29,015] ERROR - server: No 'ratings' argument provided. Aborting
+[2024-05-09 21:38:29,140] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 21:38:29,140] INFO - server: Decoding token...
+[2024-05-09 21:40:48,493] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 22:18:33,885] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 22:18:33,885] INFO - server: Decoding token...
+[2024-05-09 22:19:32,997] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 22:19:58,560] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 22:19:58,560] INFO - server: Decoding token...
+[2024-05-09 22:20:29,377] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 22:20:29,378] INFO - server: Decoding token...
+[2024-05-09 22:20:34,248] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 22:20:40,092] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 22:20:40,093] INFO - server: Decoding token...
+[2024-05-09 22:21:14,972] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 22:21:26,986] ERROR - server: Audio not found. Aborting
+[2024-05-09 22:21:27,831] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 22:21:27,831] INFO - server: Decoding token...
+[2024-05-09 22:22:02,825] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 22:22:18,557] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 22:22:18,558] INFO - server: Decoding token...
+[2024-05-09 22:22:51,673] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 22:22:51,674] INFO - server: Decoding token...
+[2024-05-09 22:22:52,967] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 22:22:52,967] INFO - server: Decoding token...
+[2024-05-09 22:22:53,150] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute
+[2024-05-09 22:22:53,855] INFO - server: Retrieving ID token from header 'Authorization'...
+[2024-05-09 22:22:53,855] INFO - server: Decoding token...
+[2024-05-09 22:24:37,191] ERROR - server: Exception on /game/ratings [POST]
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/ubuntu/quizzr_server/server.py", line 1145, in increment_ratings
+    qtpm.change_game_leaderboard_entries(leaderboard_update)
+  File "/home/ubuntu/quizzr_server/tpm.py", line 620, in change_game_leaderboard_entries
+    self.rank_game_leaderboard()
+  File "/home/ubuntu/quizzr_server/tpm.py", line 649, in rank_game_leaderboard
+    self.leaderboard.bulk_write(update_batch)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/collection.py", line 505, in bulk_write
+    bulk_api_result = blk.execute(write_concern, session)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pymongo/bulk.py", line 510, in execute
+    raise InvalidOperation('No operations to execute')
+pymongo.errors.InvalidOperation: No operations to execute

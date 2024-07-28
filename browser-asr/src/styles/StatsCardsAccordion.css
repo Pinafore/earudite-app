@@ -1,0 +1,42 @@
+.statscardsaccordion-tab {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    padding: 0;
+    border-radius: 0.5rem;
+    border: 2px solid #e1e7fa;
+    box-shadow: none;
+}
+
+.statscardsaccordion .MuiAccordion-root {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    padding: 0;
+    border-radius: 0.5rem;
+    border: 2px solid #e1e7fa;
+    box-shadow: none;
+}
+
+.statscardsaccordion .MuiAccordion-root:before {
+    background-color: transparent;
+}
+
+.statscardsaccordion .MuiAccordion-rounded:first-child {
+    border-radius: 0.5rem;
+}
+
+.statscardsaccordion .MuiAccordion-rounded:last-child {
+    border-radius: 0.5rem;
+}
+
+.statscardsaccordion-stats-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: -1rem;
+    margin-bottom: -1rem;
+}
+
+.statscardsaccordion-stat {
+    width: 100%;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}

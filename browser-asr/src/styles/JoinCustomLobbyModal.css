@@ -1,0 +1,15 @@
+.joincustomlobbymodal-button-join {
+    border-radius: 0.75rem;
+    text-align: center;
+    width: 40%;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: orange;
+    color: white;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.joincustomlobbymodal-textbox {
+    margin-left: 0.5rem;
+}

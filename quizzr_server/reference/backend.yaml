@@ -1,0 +1,2024 @@
+openapi: 3.1.0
+info:
+  title: Quizzr.io Data Flow Server
+  version: 0.13.2
+  summary: API for the Flask data flow server
+  description: 'The Quizzr.io data flow server functions as the central piece of the back-end, handling requests for changing and getting data in common but specific manners. Examples include pre-screening audio recordings of question transcripts, selecting a question to answer or record, and enabling asynchronous processing of audio. It is written in the Flask framework for Python 3.8 and uses Firebase Storage to store audio files and the MongoDB Quizzr Atlas to store data. It is especially designed to work with the front-end portion of Quizzr.io. See the [browser-asr](https://github.com/UMD-Summer-2021-ASR/browser-asr) repository for more details on how to set it up with the back-end.'
+  contact:
+    name: Christopher Rapp
+    email: christopher.michael.rapp@gmail.com
+servers:
+  - url: 'http://localhost:5000'
+  - url: 'http://localhost:4455'
+    description: Proxy
+  - url: 'https://quizzr.stoplight.io'
+    description: Stoplight website
+paths:
+  /answer:
+    get:
+      summary: Check an Answer
+      tags:
+        - frontend
+        - qb-pipeline
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  correct:
+                    type: boolean
+              examples: {}
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+      operationId: check_answer
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: a
+          description: The answer to be checked
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: qid
+          description: The ID of the question selected
+          required: true
+      description: Check if the user's answer approximately matches the stored answer of the associated question.
+      security:
+        - Firebase-Auth: []
+  '/answer_full/{qid}':
+    get:
+      summary: Get Answer
+      tags:
+        - internal
+        - qb-pipeline
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  answer:
+                    type: string
+                required:
+                  - answer
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+      operationId: get_answer
+      description: Retrieve an answer to a question.
+    parameters:
+      - schema:
+          type: integer
+        name: qid
+        in: path
+        required: true
+        description: The `qb_id` of a question
+  /audio:
+    get:
+      summary: Get Unprocessed Audio Batch
+      tags:
+        - internal
+        - rec-pipeline
+      responses:
+        '200':
+          description: Document Batch Found
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    results:
+                      - _id: 1l77laMyEVIit3_AP7v_YQBxe9RQvJ4zT
+                        transcript: The quick brown fox jumps over the lazy dog.
+                      - _id: 1IirF6ac4p-_A7zyXuDWYIzWpNUUjKbt1
+                        transcript: Hello world.
+                properties:
+                  results:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          $ref: '#/components/schemas/Audio-Id'
+                        transcript:
+                          type: string
+                          minLength: 1
+                        diarMetadata:
+                          type: string
+                      required:
+                        - _id
+                        - transcript
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - results
+              examples:
+                example-1:
+                  value:
+                    results:
+                      - _id: sFHPiWfpRae5C2-5v7tCjAvZzPDB5sr4w6WODxCZilo
+                        transcript: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                      - _id: C0cb6nKK5nQ8I12T4O4590hnnOPMm_Lxf7D9r7ZTrD4
+                        transcript: Justo donec enim diam vulputate ut pharetra sit amet. Risus feugiat in ante metus dictum at. Faucibus et molestie ac feugiat sed. Eu mi bibendum neque egestas congue quisque egestas diam in. Et tortor at risus viverra adipiscing at in tellus integer. Leo duis ut diam quam nulla porttitor massa id neque. Euismod in pellentesque massa placerat duis ultricies lacus sed turpis.
+        '404':
+          $ref: '#/components/responses/Error'
+      operationId: get_unprocessed_audio
+      description: Retrieve a batch of unprocessed audio documents up to a limit specified by the `UNPROC_FIND_LIMIT` environment variable. Each audio document includes the ID of the audio document and the transcript (retrieved from the associated question document).
+      parameters: []
+    patch:
+      summary: Add Processed Audio Data
+      tags:
+        - internal
+        - rec-pipeline
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  successes:
+                    type: integer
+                  total:
+                    type: integer
+                  errors:
+                    $ref: '#/components/schemas/Errors'
+                required:
+                  - successes
+                  - total
+        '400':
+          $ref: '#/components/responses/Error'
+      operationId: handle_processing_results
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                arguments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/Audio-Id'
+                      vtt:
+                        $ref: '#/components/schemas/VTT'
+                      score:
+                        type: object
+                        required:
+                          - wer
+                          - mer
+                          - wil
+                        properties:
+                          wer:
+                            type: number
+                            description: Word Error Rate
+                          mer:
+                            type: number
+                            description: Match Error Rate
+                          wil:
+                            type: number
+                            description: Word Information Lost
+                      batchNumber:
+                        type: string
+                        format: date
+                      metadata:
+                        type: string
+                    required:
+                      - _id
+                      - vtt
+                      - score
+                      - batchNumber
+                      - metadata
+              required:
+                - arguments
+            examples:
+              example-1:
+                value:
+                  arguments:
+                    - _id: aj1zL3A2Un3s23LJDA-tpeCnKQe0euXDsgWQVpzHjVg
+                      vtt: |-
+                        WEBVTT Kind: captions; Language: en
+
+                        00:00:00.012345 --> 00:00:01.123456
+                        <v Speaker 1>WORD1
+
+                        00:00:01.123456 --> 00:00:02.123456
+                        <v Speaker 1>WORD2
+
+                        00:01:00.012345 --> 00:01:01.123456
+                        <v Speaker 2>WORD3
+
+                        00:01:01.123456 --> 00:01:02.123456
+                        <v Speaker 2>WORD4
+                      score:
+                        wer: 1.124235
+                        mer: 1
+                        wil: 1
+                      batchNumber: '2019-08-24'
+                      metadata: 'detect_num_speakers=False, max_num_speakers=3'
+        description: A batch of results from processing audio files.
+      description: Update a batch of audio files with results from processing them.
+      parameters: []
+    post:
+      summary: Submit Recording
+      tags:
+        - frontend
+        - rec-pipeline
+      responses:
+        '202':
+          description: A list of tokens to get the status of each submission
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prescreenPointers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Prescreen-Pointer'
+                required:
+                  - prescreenPointers
+              examples: {}
+          headers: {}
+        '400':
+          $ref: '#/components/responses/Error'
+        '500':
+          $ref: '#/components/responses/Error'
+      operationId: pre_screen
+      parameters: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              oneOf:
+                - properties:
+                    audio:
+                      type: string
+                      format: binary
+                    qb_id:
+                      $ref: '#/components/schemas/QB-ID'
+                    recType:
+                      type: string
+                      enum:
+                        - normal
+                    sentenceId:
+                      type: integer
+                    diarMetadata:
+                      type: string
+                  required:
+                    - audio
+                    - qb_id
+                    - recType
+                - properties:
+                    audio:
+                      type: string
+                      format: binary
+                    recType:
+                      type: string
+                      enum:
+                        - buzz
+                  required:
+                    - audio
+                    - recType
+                - properties:
+                    audio:
+                      type: string
+                      format: binary
+                    recType:
+                      type: string
+                      enum:
+                        - answer
+                    expectedAnswer:
+                      type: string
+                    transcript:
+                      type: string
+                      description: The text decoded from the audio file
+                    correct:
+                      type: boolean
+                      description: Whether the answer was correct
+                  required:
+                    - audio
+                    - recType
+                    - expectedAnswer
+                    - transcript
+                    - correct
+              type: object
+            encoding:
+              audio:
+                contentType: audio/wav
+            examples:
+              user-submission:
+                value:
+                  audio: QBQuestionRec
+                  qb_id: 1
+                  recType: normal
+              admin-submission:
+                value:
+                  audio: DiarizationTest
+                  qb_id: 2
+                  recType: normal
+                  diarMetadata: 'detect_num_speakers=False, max_num_speakers=3'
+              user-buzz-submission:
+                value:
+                  audio: BuzzRec
+                  recType: buzz
+        description: The file to upload along with some transaction information.
+      description: Pre-screen the given audio file for how accurately it matches to the given question's transcript and upload it to the database if it is accurate enough.
+      security:
+        - Firebase-Auth: []
+  '/audio/{blob_path}':
+    parameters:
+      - $ref: '#/components/parameters/BlobPath'
+    get:
+      summary: Get Recording
+      tags:
+        - frontend
+        - qb-pipeline
+      responses:
+        '200':
+          description: Recording Found
+          content:
+            audio/wav:
+              schema:
+                type: string
+                format: binary
+              examples: {}
+          headers: {}
+        '404':
+          $ref: '#/components/responses/Error'
+      operationId: retrieve_audio_file
+      description: Retrieve an audio file from Firebase storage.
+      parameters: []
+      security:
+        - Firebase-Auth: []
+  /backend/key:
+    post:
+      summary: Generate Backend Key
+      tags:
+        - internal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    description: The secret key generated
+                required:
+                  - key
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+      operationId: generate_secret_key
+      description: |-
+        Generate a secret key to represent a given backend component.
+
+        **WARNING: A secret key can be generated only once per server session. This key cannot be recovered if lost.**
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the backend component to generate a key for
+              required:
+                - name
+        description: The arguments to provide in the POST request
+  '/downvote/{audio_id}':
+    parameters:
+      - schema:
+          type: string
+        name: audio_id
+        in: path
+        required: true
+        description: The target audio document ID
+    patch:
+      summary: Downvote a Recording
+      tags:
+        - frontend
+        - qb-pipeline
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+      operationId: downvote
+      description: Downvote an audio recording
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: '#/components/schemas/User-Id'
+  /game:
+    post:
+      summary: Upload Game
+      tags:
+        - internal
+        - qb-pipeline
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/Error'
+      operationId: post_game
+      description: Upload a game session to MongoDB.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                session:
+                  $ref: '#/components/schemas/Game-Session'
+              required:
+                - id
+                - session
+        description: The game session to put into the collection along with the ID
+  '/game/{game_id}':
+    parameters:
+      - schema:
+          type: string
+        name: game_id
+        in: path
+        required: true
+    get:
+      summary: Get Game Session
+      tags:
+        - internal
+        - qb-pipeline
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game-Session'
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+      description: Get a game session from MongoDB.
+      operationId: get_game
+  /game_results:
+    put:
+      summary: Send Game Session Results
+      tags:
+        - internal
+        - qb-pipeline
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  successful:
+                    type: integer
+                    description: The number of successful updates
+                  requested:
+                    type: integer
+                    description: The number of users included in the request body
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          description: Unauthorized
+      operationId: handle_game_results
+      description: Update the database with the results of a game session.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - properties:
+                    mode:
+                      $ref: '#/components/schemas/Game-Mode'
+                    category:
+                      type: string
+                      description: The subject category for this session
+                    users:
+                      type: object
+                      required:
+                        - <username>
+                      properties:
+                        <username>:
+                          type: object
+                          required:
+                            - questionStats
+                            - finished
+                            - won
+                          description: The update information for each `<username>`. Replace `<username>` with the name of the user you want to update.
+                          properties:
+                            questionStats:
+                              type: object
+                              required:
+                                - played
+                                - buzzed
+                                - correct
+                                - cumulativeProgressOnBuzz
+                              properties:
+                                played:
+                                  type: integer
+                                  description: The number of questions played
+                                buzzed:
+                                  type: integer
+                                  description: The number of times the user buzzed in
+                                correct:
+                                  type: integer
+                                  description: The number of times the user answered correctly
+                                cumulativeProgressOnBuzz:
+                                  type: object
+                                  description: The cumulative amount of progress through the question when the player buzzes in.
+                                  required:
+                                    - percentQuestionRead
+                                    - numSentences
+                                  properties:
+                                    percentQuestionRead:
+                                      type: number
+                                    numSentences:
+                                      type: number
+                            finished:
+                              type: boolean
+                              description: Whether the user finished playing this session
+                            won:
+                              type: boolean
+                              description: ''
+                  required:
+                    - mode
+                    - category
+                    - users
+                - properties:
+                    mode:
+                      $ref: '#/components/schemas/Game-Mode'
+                    categories:
+                      type: array
+                      description: The list of subject categories for this session
+                      items:
+                        type: string
+                    users:
+                      type: object
+                      required:
+                        - <username>
+                      properties:
+                        <username>:
+                          type: object
+                          required:
+                            - questionStats
+                            - finished
+                            - won
+                          description: The update information for each `<username>`. Replace `<username>` with the name of the user you want to update.
+                          properties:
+                            questionStats:
+                              type: object
+                              required:
+                                - played
+                                - buzzed
+                                - correct
+                                - cumulativeProgressOnBuzz
+                              properties:
+                                played:
+                                  type: object
+                                  required:
+                                    - <category>
+                                  description: The number of questions played for each category
+                                  properties:
+                                    <category>:
+                                      type: integer
+                                buzzed:
+                                  type: object
+                                  required:
+                                    - <category>
+                                  description: The number of times the user buzzed in to answer a question of a particular category
+                                  properties:
+                                    <category>:
+                                      type: integer
+                                correct:
+                                  type: object
+                                  required:
+                                    - <category>
+                                  description: The number of times the user correctly answered a question of a particular category
+                                  properties:
+                                    <category>:
+                                      type: integer
+                                cumulativeProgressOnBuzz:
+                                  type: object
+                                  required:
+                                    - percentQuestionRead
+                                    - numSentences
+                                  description: 'The cumulative amount of progress through the question when the player buzzes in, per category'
+                                  properties:
+                                    percentQuestionRead:
+                                      type: object
+                                      required:
+                                        - <category>
+                                      properties:
+                                        <category>:
+                                          type: number
+                                    numSentences:
+                                      type: object
+                                      required:
+                                        - <category>
+                                      properties:
+                                        <category>:
+                                          type: number
+                            finished:
+                              type: boolean
+                              description: Whether the user finished playing this session
+                            won:
+                              type: boolean
+                  required:
+                    - mode
+                    - categories
+                    - users
+              type: object
+        description: 'A document containing the results of the session, including the game mode, the categories, and the user profiles to update.'
+      parameters: []
+      security:
+        - Internal-Auth: []
+    parameters: []
+  '/hls/vtt/{audio_id}':
+    parameters:
+      - schema:
+          type: string
+        name: audio_id
+        in: path
+        required: true
+        description: The ID of an audio document
+    get:
+      summary: Get VTT
+      tags:
+        - internal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/VTT'
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          description: Not Found
+      operationId: get_vtt
+      description: Get a VTT from an audio document
+      parameters:
+        - schema:
+            type: string
+            default: normal
+            enum:
+              - normal
+              - gentle
+          in: query
+          name: t
+          description: 'The type of VTT to get. Defaults to "normal", or the "vtt" field'
+  /leaderboard:
+    get:
+      summary: Get Leaderboard
+      tags:
+        - frontend
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Basic-Profile'
+        '400':
+          $ref: '#/components/responses/Error'
+      operationId: get_leaderboard
+      description: Get the leaderboard of users who participated in ranked games
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: category
+          description: The subject category to filter by
+        - schema:
+            type: integer
+            maximum: 200
+          in: query
+          name: size
+          description: Display the top `<size>` players
+  '/prescreen/{pointer}':
+    parameters:
+      - schema:
+          type: string
+        name: pointer
+        in: path
+        required: true
+        description: A short-lived pointer retrieved from /audio POST to get the status of a submission.
+    get:
+      summary: Get Submission Status
+      tags:
+        - frontend
+        - rec-pipeline
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - running
+                      - finished
+                      - err
+                  name:
+                    type: string
+                    description: The name of the audio file on-disk
+                  pointer:
+                    $ref: '#/components/schemas/Prescreen-Pointer'
+                  err:
+                    type: string
+                    description: 'A machine-readable error message, present if status is "err"'
+                  accepted:
+                    type: boolean
+                    description: 'Whether the submission passed the pre-screening, present if status is "finished"'
+                required:
+                  - status
+                  - name
+                  - pointer
+        '404':
+          $ref: '#/components/responses/Error'
+      operationId: get_prescreen_status
+      description: 'Use a pointer to get the status of the submission and whether it passed the pre-screening if it is finished, or get the error that occurred if there was one.'
+  /profile:
+    get:
+      summary: Get Private Profile
+      tags:
+        - frontend
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                new_user:
+                  value:
+                    _id: kaJ73KMV78tIj3a92xmn83ikjla1
+                    pfp:
+                      - 0
+                    username: John Doe
+                    usernameSpecs: ''
+                    ratings:
+                      all: 1
+                      literature: 1
+                    totalQuestionsPlayed: 0
+                    totalGames: 0
+                    coins: 0
+                    coinsCumulative: 0
+                    activityOverview: []
+                    recordedAudios: []
+                    permLevel: normal
+                    playTime: 0
+                    creationDate: '2019-08-24T14:15:22.124643Z'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          $ref: '#/components/responses/Error'
+      operationId: get_profile
+      parameters: []
+      description: Retrieve all profile information associated with the user specified in the Auth-Token header. This is intended to be called by solely the front-end.
+      security:
+        - Firebase-Auth: []
+    post:
+      summary: Create Profile
+      operationId: create_profile
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/Error'
+      description: Create a user profile stub as a client
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                pfp:
+                  $ref: '#/components/schemas/PFP-Specs'
+                username:
+                  $ref: '#/components/schemas/Username'
+              required:
+                - pfp
+                - username
+            examples:
+              user-stub:
+                value:
+                  pfp:
+                    - 0
+                  username: John Doe
+        description: The fields to set in the profile
+      tags:
+        - frontend
+      parameters: []
+      security:
+        - Firebase-Auth: []
+    patch:
+      summary: Update Profile
+      operationId: modify_profile
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          description: Unauthorized
+        '404':
+          $ref: '#/components/responses/Error'
+        '500':
+          description: Internal Server Error
+      description: Update the user's profile as the user
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                pfp:
+                  $ref: '#/components/schemas/PFP-Specs'
+                username:
+                  $ref: '#/components/schemas/Username'
+                usernameSpecs:
+                  $ref: '#/components/schemas/Username-Specs'
+        description: The fields to update. Can include any of the properties listed in the schema.
+      tags:
+        - frontend
+      security:
+        - Firebase-Auth: []
+    delete:
+      summary: Remove Profile
+      operationId: delete_profile
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '404':
+          $ref: '#/components/responses/Error'
+        '500':
+          description: Internal Server Error
+      description: 'Delete the user''s profile as the user, along with all associated data.'
+      tags:
+        - frontend
+      parameters: []
+      security:
+        - Firebase-Auth: []
+  '/profile/{username}':
+    parameters:
+      - schema:
+          type: string
+        name: username
+        in: path
+        required: true
+    get:
+      summary: Get Public Profile
+      tags:
+        - frontend
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Public-Profile'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get_other_profile
+      description: Retrieve the public profile of another user
+      parameters:
+        - schema: {}
+          in: query
+          name: basic
+          description: Include this keyword to get a reduced public profile.
+      security:
+        - Firebase-Auth: []
+    patch:
+      summary: Change Other Profile
+      tags:
+        - frontend
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          $ref: '#/components/responses/Error'
+        '500':
+          description: Internal Server Error
+      operationId: modify_other_profile
+      description: Modify the profile of another user. Can modify any field except `permLevel`. Requires elevated permissions.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pfp:
+                  $ref: '#/components/schemas/PFP-Specs'
+                username:
+                  $ref: '#/components/schemas/Username'
+                usernameSpecs:
+                  $ref: '#/components/schemas/Username-Specs'
+                ratings:
+                  $ref: '#/components/schemas/Game-Ratings'
+                totalQuestionsPlayed:
+                  type: integer
+                totalGames:
+                  type: integer
+                coins:
+                  type: integer
+                coinsCumulative:
+                  type: integer
+                activityOverview:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/User-Action'
+                recordedAudios:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Recording'
+        description: The fields to update. Can include any of the properties listed below.
+      security:
+        - Firebase-Auth: []
+    delete:
+      summary: Remove Other Profile
+      tags:
+        - frontend
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          $ref: '#/components/responses/Error'
+        '500':
+          description: Internal Server Error
+      operationId: delete_other_profile
+      description: Deletes another user. Requires elevated permissions.
+      parameters: []
+      security:
+        - Firebase-Auth: []
+  '/profile/{username}/history':
+    parameters:
+      - schema:
+          type: string
+        name: username
+        in: path
+        required: true
+    get:
+      summary: Get Player Game History
+      tags:
+        - internal
+        - qb-pipeline
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Game-Session'
+                required:
+                  - results
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '500':
+          $ref: '#/components/responses/Error'
+      operationId: get_game_history
+      description: 'Retrieve the game history of a given username sorted from latest to earliest, optionally only including games from "start" to "end".'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: iRange
+          description: 'A zero index range that filters the results from the start to the end, inclusive.'
+        - schema:
+            type: string
+          in: query
+          name: start
+          description: A zero index that excludes results preceding in index.
+        - schema:
+            type: string
+          in: query
+          name: end
+          description: A zero index that excludes results past this index.
+  /question:
+    get:
+      summary: Get Recorded Question
+      tags:
+        - qb-pipeline
+        - frontend
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        qb_id:
+                          $ref: '#/components/schemas/QB-ID'
+                        category:
+                          type: string
+                        audio:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                $ref: '#/components/schemas/Audio-Id'
+                              sentenceId:
+                                type: integer
+                              tokenizationId:
+                                type: integer
+                              gentleVtt:
+                                $ref: '#/components/schemas/VTT'
+                              vtt:
+                                $ref: '#/components/schemas/VTT'
+                            required:
+                              - id
+                              - gentleVtt
+                              - vtt
+                      required:
+                        - qb_id
+                        - category
+                        - audio
+                required:
+                  - results
+              examples:
+                example-1:
+                  value:
+                    results:
+                      - qb_id: 0
+                        category: literature
+                        audio:
+                          - id: aj1zL3A2Un3s23LJDA-tpeCnKQe0euXDsgWQVpzHjVg
+                            sentenceId: 0
+                            gentleVtt: |-
+                              WEBVTT Kind: captions; Language: en
+
+                              00:00:00.012345 --> 00:00:01.123456
+                              <v Speaker 1>WORD1
+
+                              00:00:01.123456 --> 00:00:02.123456
+                              <v Speaker 1>WORD2
+
+                              00:01:00.012345 --> 00:01:01.123456
+                              <v Speaker 2>WORD3
+
+                              00:01:01.123456 --> 00:01:02.123456
+                              <v Speaker 2>WORD4
+                            vtt: |-
+                              WEBVTT Kind: captions; Language: en
+
+                              00:00:00.012345 --> 00:00:01.123456
+                              <v Speaker 1>WORD1
+
+                              00:00:01.123456 --> 00:00:02.123456
+                              <v Speaker 1>WORD2
+
+                              00:01:00.012345 --> 00:01:01.123456
+                              <v Speaker 2>WORD3
+
+                              00:01:01.123456 --> 00:01:02.123456
+                              <v Speaker 2>WORD4
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    err: rec_not_found
+                properties:
+                  err:
+                    type: string
+                    enum:
+                      - rec_not_found
+                required:
+                  - err
+      operationId: pick_game_question
+      description: Retrieve a batch of randomly-selected questions and attempt to retrieve the associated recordings with the best evaluations possible without getting recordings from different users in the same question.
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: batchSize
+          description: The number of questions to sample. Default is 1.
+        - schema:
+            type: string
+          in: query
+          name: category
+          description: The category/ies to include. Specify this parameter multiple times to include multiple categories. Does not filter by category if none is specified
+        - schema:
+            type: array
+          in: query
+          name: difficultyRange
+          description: The range of difficulties to select
+      security:
+        - Firebase-Auth: []
+  /question/unrec:
+    get:
+      summary: Get Question and Transcript
+      tags:
+        - frontend
+        - rec-pipeline
+      responses:
+        '200':
+          description: Question Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      oneOf:
+                        - properties:
+                            id:
+                              $ref: '#/components/schemas/QB-ID'
+                            transcript:
+                              type: string
+                            sentenceId:
+                              type: integer
+                          required:
+                            - id
+                            - transcript
+                            - sentenceId
+                        - properties:
+                            id:
+                              $ref: '#/components/schemas/QB-ID'
+                            transcript:
+                              type: string
+                            tokenizations:
+                              $ref: '#/components/schemas/Tokenizations'
+                          required:
+                            - id
+                            - transcript
+                            - tokenizations
+                      type: object
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        questionid:
+                          type: string
+                          description: A string produced by calling repr() on the question's internal ID.
+                        reason:
+                          type: string
+                          description: The cause of the error
+                      required:
+                        - questionid
+                        - reason
+                required:
+                  - results
+              examples:
+                example-1:
+                  value:
+                    results:
+                      - id: 12345678
+                        transcript: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultrices sagittis orci a scelerisque purus. Vehicula ipsum a arcu cursus. Dis parturient montes nascetur ridiculus mus mauris vitae ultricies leo. In dictum non consectetur a erat nam at lectus. At augue eget arcu dictum. Bibendum neque egestas congue quisque egestas diam in arcu. Eget nullam non nisi est. Praesent elementum facilisis leo vel fringilla est ullamcorper. Aliquet risus feugiat in ante.'
+                        tokenizations:
+                          - - 0
+                            - 123
+                          - - 124
+                            - 167
+                          - - 168
+                            - 197
+                          - - 198
+                            - 270
+                          - - 271
+                            - 318
+                          - - 319
+                            - 345
+                          - - 346
+                            - 405
+                          - - 406
+                            - 431
+                          - - 432
+                            - 495
+                          - - 496
+                            - 526
+        '404':
+          description: Question Not Found
+      operationId: pick_recording_question
+      description: Retrieve a question ID and its associated transcript
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: batchSize
+          description: The number of questions to retrieve
+        - schema:
+            type: integer
+            minimum: 0
+            maximum: 2
+          in: query
+          name: difficultyType
+          description: A difficulty type in enumerated form. Higher numbers are more difficult.
+      security:
+        - Firebase-Auth: []
+    post:
+      summary: Upload Question Batch
+      tags:
+        - internal
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/Error'
+        '500':
+          description: Internal Server Error
+      operationId: upload_questions
+      description: Upload a batch of unrecorded questions.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                arguments:
+                  type: array
+                  uniqueItems: true
+                  items:
+                    oneOf:
+                      - properties:
+                          qb_id:
+                            $ref: '#/components/schemas/QB-ID'
+                          sentenceId:
+                            type: integer
+                            description: The number of the sentence of the question this document represents
+                          transcript:
+                            type: string
+                            description: The transcript corresponding to the sentenceId.
+                          answer:
+                            type: string
+                          recDifficulty:
+                            type: integer
+                            description: 'A value returned from the bag-of-words-test (see https://github.com/UMD-Summer-2021-ASR/bag-of-words-test).'
+                          category:
+                            type: string
+                            description: The subject category of the question
+                        required:
+                          - qb_id
+                          - sentenceId
+                          - transcript
+                          - answer
+                          - recDifficulty
+                          - category
+                      - properties:
+                          qb_id:
+                            $ref: '#/components/schemas/QB-ID'
+                          transcript:
+                            type: string
+                            description: 'The transcript corresponding to the sentenceId, if provided, otherwise the entire transcript.'
+                          answer:
+                            type: string
+                          recDifficulty:
+                            type: integer
+                            description: 'A value returned from the bag-of-words-test (see https://github.com/UMD-Summer-2021-ASR/bag-of-words-test).'
+                          category:
+                            type: string
+                            description: The subject category of the question
+                          tokenizations:
+                            $ref: '#/components/schemas/Tokenizations'
+                        required:
+                          - qb_id
+                          - transcript
+                          - answer
+                          - recDifficulty
+                          - category
+                          - tokenizations
+                    type: object
+              required:
+                - arguments
+            examples:
+              segmented:
+                value:
+                  arguments:
+                    - qb_id: 0
+                      sentenceId: 0
+                      transcript: 'This man ordered Thomas Larkin to buy him seventy square miles of land, leading him to acquire his Mariposa gold mine.'
+                      answer: John C. Fremont
+                      recDifficulty: 4
+                      category: history
+                    - qb_id: 0
+                      sentenceId: 1
+                      transcript: 'He married Jessie, the daughter of Thomas Hart Benton, and, during the Civil War, he controversially confiscated slaveholder property while acting as the leader of (*) Missouri.'
+                      answer: John C. Fremont
+                      recDifficulty: 4
+                      category: history
+                    - qb_id: 0
+                      sentenceId: 2
+                      transcript: Kit Carson served as the guide for the first two of his expeditions to survey the American West.
+                      answer: John C. Fremont
+                      recDifficulty: 4
+                      category: history
+                    - qb_id: 0
+                      sentenceId: 3
+                      transcript: 'For 10 points, name this explorer known as "the Pathfinder" who was also the first presidential candidate of the Republican Party.'
+                      answer: John C. Fremont
+                      recDifficulty: 4
+                      category: history
+              non-segmented:
+                value:
+                  arguments:
+                    - qb_id: 0
+                      sentenceId: 0
+                      transcript: string
+                      answer: string
+                      recDifficulty: 0
+                      category: string
+        description: 'A batch of unrecorded question documents, which can either be segmented non-segmented.'
+      parameters: []
+  /socket/key:
+    post:
+      summary: Generate Socket Server Key
+      tags:
+        - internal
+        - qb-pipeline
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    description: The secret key generated
+                required:
+                  - key
+        '401':
+          $ref: '#/components/responses/Error'
+      operationId: generate_game_key
+      description: |-
+        Alias for `/backend/key` with the "name" argument being "socket".
+
+        **WARNING: A secret key can be generated only once per server session. This key cannot be recovered if lost.**
+    parameters: []
+  '/upvote/{audio_id}':
+    parameters:
+      - schema:
+          type: string
+        name: audio_id
+        in: path
+        required: true
+        description: The target audio document ID
+    patch:
+      summary: Upvote a Recording
+      tags:
+        - frontend
+        - qb-pipeline
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+      operationId: upvote
+      description: Upvote an audio recording
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: '#/components/schemas/User-Id'
+              required:
+                - userId
+  /validate:
+    get:
+      summary: Verify Firebase ID Token
+      tags:
+        - internal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subject:
+                    $ref: '#/components/schemas/Permission-Level'
+                  extra:
+                    type: object
+                    description: Always empty
+                required:
+                  - subject
+                  - extra
+              examples: {}
+        '401':
+          description: Unauthorized
+      operationId: check_token
+      description: 'Attempts to validate the Firebase ID token given in the Authorization header. Note: The same behavior occurs with `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, and `TRACE`.'
+components:
+  schemas:
+    Audio-Id:
+      type: string
+      title: Audio-Id
+      description: The ID of an audio document
+      examples:
+        - aj1zL3A2Un3s23LJDA-tpeCnKQe0euXDsgWQVpzHjVg
+      pattern: '^[A-Za-z0-9 -_]+'
+      example: aj1zL3A2Un3s23LJDA-tpeCnKQe0euXDsgWQVpzHjVg
+    Basic-Profile:
+      title: Basic-Profile
+      type: object
+      description: The basic profile of a user
+      properties:
+        username:
+          $ref: '#/components/schemas/Username'
+        usernameSpecs:
+          $ref: '#/components/schemas/Username-Specs'
+        pfp:
+          $ref: '#/components/schemas/PFP-Specs'
+        rating:
+          type: integer
+      examples:
+        - username: John Doe
+          usernameSpecs: ''
+          pfp:
+            - 0
+          rating: 0
+    Errors:
+      title: Errors
+      type: array
+      description: A list of error messages to send to the end user (of the API)
+      examples:
+        - - type: bad_request
+            reason: arg_foo_undefined
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            enum:
+              - bad_request
+              - internal_error
+          reason:
+            $ref: '#/components/schemas/Error-Id'
+        required:
+          - type
+          - reason
+    Error-Msg:
+      title: Error-Msg
+      type: object
+      description: A JSON error message that includes both a human-readable and a machine-readable error message.
+      properties:
+        err:
+          type: string
+          description: A human-readable form of the error message
+        err_id:
+          type: string
+          description: A machine-readable form of the error message
+        extra:
+          type: array
+          items: {}
+          description: 'Extra, machine-readable information to include for specificity'
+      required:
+        - err
+        - err_id
+    Error-Id:
+      title: Error-Id
+      type: string
+      description: A machine-readable error message
+      examples:
+        - unrec_invalid_qids
+    Game-Mode:
+      title: Game-Mode
+      type: string
+      description: The gamemode for this session
+      enum:
+        - casual
+        - competitive
+    Game-Ratings:
+      title: Game-Ratings
+      type: object
+      description: 'The user''s ratings in competitive play, per category'
+      properties:
+        <category>:
+          type: number
+    Game-Session:
+      title: Game-Session
+      type: object
+      description: A game session
+      properties:
+        buzz_recording:
+          type: array
+          items:
+            type: array
+            items:
+              type: array
+              items: {}
+        settings:
+          type: object
+          required:
+            - gamemode
+            - rounds_num
+            - questions_num
+            - tiebreaker
+            - buzz_time
+            - post_buzz_time
+            - gap_time
+            - teams
+          properties:
+            gamemode:
+              type: string
+            rounds_num:
+              type: integer
+            questions_num:
+              type: integer
+            tiebreaker:
+              type: string
+            buzz_time:
+              type: integer
+            post_buzz_time:
+              type: integer
+            gap_time:
+              type: integer
+            teams:
+              type: integer
+        date:
+          type: string
+          format: date
+        questions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              qb_id:
+                type: number
+            required:
+              - id
+              - qb_id
+      required:
+        - buzz_recording
+        - settings
+        - date
+        - questions
+    Game-Stats:
+      title: Game-Stats
+      type: object
+      description: Expanded Statistics for a game mode.
+      properties:
+        questions:
+          type: object
+          required:
+            - played
+            - buzzed
+            - correct
+            - buzzRate
+            - buzzAccuracy
+            - avgProgressOnBuzz
+            - cumulativeProgressOnBuzz
+          properties:
+            played:
+              type: object
+              properties:
+                <category>:
+                  type: integer
+            buzzed:
+              type: object
+              properties:
+                <category>:
+                  type: integer
+            correct:
+              type: object
+              properties:
+                <category>:
+                  type: integer
+            buzzRate:
+              type: object
+              properties:
+                <category>:
+                  type: number
+            buzzAccuracy:
+              type: object
+              properties:
+                <category>:
+                  type: number
+            avgProgressOnBuzz:
+              type: object
+              required:
+                - percentQuestionRead
+                - numSentences
+              properties:
+                percentQuestionRead:
+                  type: object
+                  properties:
+                    <category>:
+                      type: number
+                numSentences:
+                  type: object
+                  properties:
+                    <category>:
+                      type: number
+            cumulativeProgressOnBuzz:
+              type: object
+              required:
+                - percentQuestionRead
+                - numSentences
+              properties:
+                percentQuestionRead:
+                  type: object
+                  properties:
+                    <category>:
+                      type: number
+                numSentences:
+                  type: object
+                  properties:
+                    <category>:
+                      type: number
+        game:
+          type: object
+          required:
+            - played
+            - finished
+            - won
+            - winRate
+          properties:
+            played:
+              type: object
+              properties:
+                <category>:
+                  type: integer
+            finished:
+              type: object
+              properties:
+                <category>:
+                  type: integer
+            won:
+              type: object
+              properties:
+                <category>:
+                  type: integer
+            winRate:
+              type: object
+              properties:
+                <category>:
+                  type: number
+      required:
+        - questions
+        - game
+    Permission-Level:
+      type: string
+      title: Permission-Level
+      enum:
+        - normal
+        - admin
+      description: The permission level of a user
+      examples:
+        - normal
+    PFP-Specs:
+      title: PFP-Specs
+      type: array
+      description: Profile picture specifications
+      items:
+        type: integer
+      examples:
+        - - 0
+    Prescreen-Pointer:
+      title: Prescreen-Pointer
+      type: string
+      description: A short-lived pointer to use for /prescreen to get the status of a submission.
+    Public-Profile:
+      title: Public-Profile
+      type: object
+      description: The public profile of a user
+      examples:
+        - username: John Doe
+          usernameSpecs: ''
+          pfp:
+            - 0
+          ratings:
+            all: 0
+            literature: 0
+      properties:
+        _id:
+          $ref: '#/components/schemas/User-Id'
+        username:
+          $ref: '#/components/schemas/Username'
+        usernameSpecs:
+          $ref: '#/components/schemas/Username-Specs'
+        pfp:
+          $ref: '#/components/schemas/PFP-Specs'
+        ratings:
+          $ref: '#/components/schemas/Game-Ratings'
+      required:
+        - _id
+        - username
+        - usernameSpecs
+        - pfp
+        - ratings
+    QB-ID:
+      title: QB-ID
+      type: integer
+      description: The ID of the question
+    Recording:
+      title: Recording
+      type: object
+      description: A recording submission as represented when embedded in a field.
+      properties:
+        id:
+          $ref: '#/components/schemas/Audio-Id'
+        recType:
+          $ref: '#/components/schemas/Rec-Type'
+      examples:
+        - id: aj1zL3A2Un3s23LJDA-tpeCnKQe0euXDsgWQVpzHjVg
+          recType: normal
+        - id: ''
+          recType: ''
+    Rec-Type:
+      type: string
+      title: Rec-Type
+      description: Recording type
+      enum:
+        - normal
+        - buzz
+      examples:
+        - normal
+        - ''
+    Str-ObjectId:
+      type: string
+      title: Str-ObjectId
+      minLength: 24
+      maxLength: 24
+      pattern: '^[0-9a-f]+'
+      description: String representation of an ObjectId
+      examples:
+        - 9174ea6cb092348d950a2f65
+        - 0
+    Tokenizations:
+      title: Tokenizations
+      type: array
+      description: An array containing the slice indices of the transcript for each sentence
+      items:
+        type: array
+        items:
+          type: integer
+    User:
+      title: User
+      type: object
+      description: 'The full profile of a user, including "private" information. This is a MongoDB document in the Users collection.'
+      examples:
+        - _id: kaJ73KMV78tIj3a92xmn83ikjla1
+          pfp:
+            - 0
+          username: John Doe
+          usernameSpecs: ''
+          ratings:
+            all: 0
+            literature: 0
+          totalQuestionsPlayed: 0
+          totalGames: 0
+          coins: 0
+          coinsCumulative: 0
+          activityOverview:
+            - id: string
+          recordedAudios:
+            - id: aj1zL3A2Un3s23LJDA-tpeCnKQe0euXDsgWQVpzHjVg
+              recType: normal
+          permLevel: normal
+          playTime: 1234
+          creationDate: '2019-08-24T14:15:22Z'
+        - _id: ''
+          pfp: []
+          username: ''
+          usernameSpecs: ''
+          ratings: {}
+          totalQuestionsPlayed: 0
+          totalGames: 0
+          coins: 0
+          coinsCumulative: 0
+          activityOverview: []
+          recordedAudios: []
+          permLevel: normal
+          playTime: 0
+          creationDate: ''
+      properties:
+        _id:
+          $ref: '#/components/schemas/User-Id'
+        pfp:
+          $ref: '#/components/schemas/PFP-Specs'
+        username:
+          $ref: '#/components/schemas/Username'
+        usernameSpecs:
+          $ref: '#/components/schemas/Username-Specs'
+        ratings:
+          $ref: '#/components/schemas/Game-Ratings'
+        totalQuestionsPlayed:
+          type: integer
+        totalGames:
+          type: integer
+        coins:
+          type: integer
+        coinsCumulative:
+          type: integer
+        activityOverview:
+          type: array
+          items:
+            $ref: '#/components/schemas/User-Action'
+        recordedAudios:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recording'
+        permLevel:
+          $ref: '#/components/schemas/Permission-Level'
+        playTime:
+          type: integer
+          description: 'Total amount of time the user has played for, measured in seconds.'
+        creationDate:
+          type: string
+          format: date-time
+          description: The date and time the user's account was created. Should be UTC
+        stats:
+          type: object
+          properties:
+            casual:
+              $ref: '#/components/schemas/Game-Stats'
+            competitive:
+              $ref: '#/components/schemas/Game-Stats'
+      required:
+        - _id
+        - pfp
+        - username
+        - usernameSpecs
+        - ratings
+        - totalQuestionsPlayed
+        - totalGames
+        - coins
+        - coinsCumulative
+        - activityOverview
+        - recordedAudios
+        - permLevel
+        - playTime
+        - creationDate
+    Username:
+      type: string
+      title: Username
+      description: The name of the user
+      minLength: 1
+      examples:
+        - John_Doe
+        - Unknown
+      maxLength: 16
+      pattern: '^[A-Za-z0-9]+'
+    Username-Specs:
+      title: Username-Specs
+      type: string
+      description: Username specifications
+      examples: []
+    User-Action:
+      title: User-Action
+      type: object
+      properties:
+        id:
+          type: string
+      description: Not defined yet
+      examples: []
+    User-Id:
+      type: string
+      title: User-Id
+      description: Firebase User ID
+      pattern: '^[A-Za-z0-9]+'
+      examples:
+        - kaJ73KMV78tIj3a92xmn83ikjla1
+        - ''
+      minLength: 1
+      maxLength: 28
+    VTT:
+      title: VTT
+      type: string
+      description: The contents of a VTT file
+      examples:
+        - |-
+          WEBVTT Kind: captions; Language: en
+
+          00:00:00.012345 --> 00:00:01.123456
+          <v Speaker 1>WORD1
+
+          00:00:01.123456 --> 00:00:02.123456
+          <v Speaker 1>WORD2
+
+          00:01:00.012345 --> 00:01:01.123456
+          <v Speaker 2>WORD3
+
+          00:01:01.123456 --> 00:01:02.123456
+          <v Speaker 2>WORD4
+        - ''
+  parameters:
+    BlobPath:
+      name: blob_path
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uri
+      description: The path to a Firebase Cloud Storage object in the format `<recType>/<_id>`
+      allowReserved: true
+  responses:
+    Error:
+      description: A response for when any kind of handled error occurs. May not always be present
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error-Msg'
+  securitySchemes:
+    Firebase-Auth:
+      type: http
+      scheme: bearer
+      description: A Bearer token sent from Firebase
+    Internal-Auth:
+      type: http
+      scheme: basic
+      description: A custom token generated by the server itself to identify other backend components
+tags:
+  - name: frontend
+  - name: internal
+  - name: qb-pipeline
+  - name: rec-pipeline

@@ -1,0 +1,151 @@
+.createaccount-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createaccount-quizzr-title {
+    margin-top: 1rem;
+    font-weight: 900;
+    color: #2046F5;
+    font-size: 4rem;
+}
+
+.createaccount-quizzr-subtitle {
+    color: #9B9B9B;
+    font-size: 1rem;
+    margin-top: -0.5rem;
+}
+
+.createaccount-body-wrapper {
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.createaccount-welcome-wrapper {
+    display: flex;
+    margin-top: 1.5rem;
+}
+
+.createaccount-welcome-welcome {
+    font-size: 1.5rem;
+    color: black;
+    font-weight: 700;
+}
+
+.createaccount-welcome-firstname {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+    color: #2046F5;
+    font-weight: 700;
+}
+
+.createaccount-description {
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.createaccount-username-label {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.createaccount-consent-label {
+    font-size: 0.85rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createaccount-consent-label-text {
+    font-size: 0.7rem;
+}
+
+.createaccount-consent-btn-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.createaccount-consent-btn {
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    border: 1px solid #b52121;
+}
+
+.createaccount-consent-btn-right {
+    margin-right: 1rem;
+    border: 1px solid #21b521;
+}
+
+.createaccount-consent-btn-selected {
+    border: 1px solid #b52121;
+    background-color: #b52121;
+    color: white;
+}
+
+.createaccount-consent-btn-selected-right {
+    border: 1px solid #21b521;
+    background-color: #21b521;
+    color: white;
+}
+
+.createaccount-username-textbox-wrapper {
+    margin-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.createaccount-username-textbox {
+    font-size: 1.25rem;
+    width: 15rem;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    border: 2px solid #88a1eb;
+}
+
+.createaccount-tinylabel {
+    height: 1rem;
+    font-size: 0.75rem;
+    color: grey;
+}
+
+.createaccount-footer-btn-wrapper {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+
+.createaccount-footer-btn-register {
+    border-radius: 0.5rem;
+    color: white;
+    background-color: #2046F5;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.createaccount-footer-btn-cancel {
+    border-radius: 0.5rem;
+    border: 1px solid #a2aedf;
+    color: #2046F5;
+    background-color: white;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+    cursor: pointer;
+}

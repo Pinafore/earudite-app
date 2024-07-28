@@ -1,0 +1,20 @@
+cache:
+  dir: "./cache" # Cache Directory
+  size: "100MB" # Size limit for media cache
+  limit: 100 # Limit on number of files in media cache
+  tempdir: "./temp" # Temporary directory for medial transcoding
+  static: ".root/static" # Directory for storing HLS Streams
+  expiry: "2m30s" # Expiration time for generated tokens and HLS Streams
+  killsize:
+    enabled: false # Enables a Kill Switch to prevent extreme disk usage.
+    tempdir: "200MB" # Max Size Limit for temp directory, kills program if this is exceeded
+    static: "512MB" # Max Size Limit for statuc directory, kills program if this is exceeded
+
+port: 4440 # Port to run the HTTP Server ( alternatively use the --port flag)
+
+handshake: "I-AM-A-SECRET-KEY" #"IDK" # Secret Key to generate tokens
+
+url:
+  audio: http://54.226.34.169:5110/audio # Download url for audio files such that for a given audio id, the download url is http://localhost:5000/audio/<id>
+  vtt: http://54.226.34.169:5110/hls/vtt # Download url for vtt files such that for a given audio id, the download url is http://localhost:5000/vtt/<id>
+

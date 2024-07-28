@@ -1,0 +1,27 @@
+.player-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+.transcript-box {
+    background-color: #EDEDED;
+    width: 90%;
+    height: 15rem;
+    border-radius: 0.875rem;
+    padding: 1rem;
+    font-size: 1.25rem;
+}
+
+.play-btn {
+    background-color: #2046F5;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    margin-top: 4rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    cursor: pointer;
+}

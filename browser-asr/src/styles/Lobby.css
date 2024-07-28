@@ -1,0 +1,201 @@
+.lobby-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.lobby-gamesettings-wrapper {
+    flex-grow: 1;
+    flex-basis: 0;
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    background-color: #E8EDF6;
+    align-items: center;
+}
+
+.lobby-gamesettings-list-wrapper {
+    width: 90%;
+    background-color: white;
+    flex-grow: 1;
+    flex-basis: 0;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    border-radius: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.lobby-gamesettings-setting-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    align-items: center;
+}
+
+.lobby-gamesettings-hor-flex {
+    display: flex;
+    align-items: center;
+}
+
+.lobby-gamesettings-selector-item {
+    padding: 0.15rem 0.5rem 0.15rem 0.5rem;
+    border-radius: 0.3rem;
+    margin-left: 0.5rem;
+    border: 3px solid white;
+    cursor: pointer;
+}
+
+.lobby-gamesettings-selector-selected {
+    border: 3px solid #6287f7;
+}
+
+.lobby-gamesettings-slider-num {
+    margin-right: 1rem;
+}
+
+.lobby-gamesettings-slider-wrapper {
+    width: 5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.lobby-gamesettings-buttons-wrapper {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.lobby-gamesettings-button {
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    background-color: #6287f7;
+    color: white;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.lobby-players-wrapper {
+    flex-grow: 1;
+    flex-basis: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    background-color: #E8EDF6;
+    align-items: center;
+}
+
+.lobby-title {
+    width: 100%;
+    font-size: 1.25rem;
+    color: #6287F7;
+    text-align: left;
+    padding: 1rem 1.2rem 1rem 1.2rem;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.lobby-players-list-wrapper {
+    width: 90%;
+    background-color: white;
+    flex-grow: 1;
+    flex-basis: 0;
+    overflow-y: hidden;
+    margin-bottom: 1rem;
+    border-radius: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0.75rem;
+}
+
+.lobby-players-list-team-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    margin-bottom: 1.5rem;
+}
+
+.lobby-players-list-team-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.lobby-players-player-wrapper {
+    width: 100%;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    text-align: left;
+    padding: 0.5rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    color: grey;
+    border: 1px solid #E8EDF6;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+.lobby-players-player-wrapper-left {
+    display: flex;
+    align-items: center;
+}
+
+.lobby-players-switchteam-icon-wrapper {
+    border: 1px solid lightgrey;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lobby-players-list-wrapper > * {
+    margin-top: 0.75rem;
+}
+
+.lobby-players-list-wrapper > *:first-child {
+    margin-top: 0;
+}
+
+.lobby-players-player-self {
+    color: #6287F7;
+}
+
+.lobby-loading-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.lobby-findingmatch-quit-btn {
+    margin-top: 2rem;
+    font-size: 1rem;
+    background-color: #6287f7;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}

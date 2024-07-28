@@ -1,0 +1,94 @@
+services:
+  client:
+    build: browser-asr
+    environment:
+      - REACT_APP_PUBLIC_DATAFLOW_URL=http://${PUBLIC_IP}:5110
+      - REACT_APP_PUBLIC_SOCKET_URL=http://${PUBLIC_IP}:6571
+      - REACT_APP_PUBLIC_SOCKETFLASK_URL=http://${PUBLIC_IP}:6800
+      - REACT_APP_PUBLIC_HLS_URL=http://${PUBLIC_IP}:4440
+    ports:
+      - 3000:3000
+    networks:
+      - ear-net
+
+  authroute:
+    build: reroute
+    ports:
+      - 8443:8443
+    networks:
+      - ear-net
+
+  server:
+    build: server
+    environment:
+      -  GOOGLE_APPLICATION_CREDENTIALS=secrets/firebase_storage_key.json
+      -  Q_INST_PATH=/SOURCE
+      -  CONNECTION_STRING=${MONGO_CONNECTION_STRING}
+      -  BACKEND_URL=http://quizzrserver:5110/
+      -  DF_SERVER_AUDIO_PSWD=qwert12345
+      -  HLS_URL=http://hls:4440
+    ports:
+      - 6800:6800
+    networks:
+      - ear-net
+
+  quizzrsocketserver:
+    build: quizzr-socket-server
+    environment:
+      -  GOOGLE_APPLICATION_CREDENTIALS=secrets/firebase_storage_key.json
+      -  Q_INST_PATH=/SOURCE
+      -  BACKEND_URL=http://quizzrserver:5110/
+      -  CONNECTION_STRING=${MONGO_CONNECTION_STRING}
+      -  DF_SERVER_AUDIO_PSWD=qwert12345
+      -  HLS_URL=http://hls:4440
+      -  FORCED_DECODING=http://forceddecoding:5000
+    ports:
+      - 6571:6571
+    networks:
+      - ear-net
+
+  quizzrserver:
+    build: quizzr_server
+    environment:
+      -  GOOGLE_APPLICATION_CREDENTIALS=secrets/firebase_storage_key.json
+      -  Q_INST_PATH=/SOURCE
+      -  BACKEND_URL=http://quizzrserver:5110/
+      -  CONNECTION_STRING=${MONGO_CONNECTION_STRING}
+      -  DF_SERVER_AUDIO_PSWD=qwert12345
+      -  HLS_URL=http://hls:4440
+    ports:
+      - 5110:5110
+    networks:
+      - ear-net
+
+  hls:
+    build: hls
+    environment:
+      -  GOOGLE_APPLICATION_CREDENTIALS=secrets/firebase_storage_key.json
+      -  Q_INST_PATH=/SOURCE
+      -  BACKEND_URL=http://quizzrserver:5110/
+      -  CONNECTION_STRING=${MONGO_CONNECTION_STRING}
+      -  DF_SERVER_AUDIO_PSWD=qwert12345
+      -  HLS_URL=http://hls:4440
+      -  DATAFLOW_URL_AUDIO=http://${PUBLIC_IP}:5110/audio
+      -  DATAFLOW_URL_VTT=http://${PUBLIC_IP}:5110/hls/vtt
+    ports:
+      - 4440:4440
+    networks:
+      - ear-net
+
+  kaldistage:
+    build: kaldistage
+
+  forceddecoding:
+    build: forced_decoding
+    ports:
+      - 5000:5000
+    depends_on:
+      - kaldistage
+    networks:
+      - ear-net
+
+
+networks:
+  ear-net:

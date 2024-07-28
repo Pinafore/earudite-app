@@ -1,0 +1,435 @@
+.login-white-panel-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.login-white-panel {
+    margin: 0;
+    width: 42rem;
+    padding: 2rem;
+    margin-bottom: 6rem;
+    border-radius: 1.5rem;
+    background-color: #F9F9F9;
+    transform: translateY(max(3rem, calc(50vh - 50%)));
+    -webkit-box-shadow: 0px 31px 38px -18px rgba(0,0,0,0.2); 
+    box-shadow: 0px 31px 38px -18px rgba(0,0,0,0.2);
+}
+
+.login-title {
+    font-weight: 900;
+    color: #2046F5;
+    font-size: 5rem;
+}
+
+.login-subtitle {
+    color: #9B9B9B;
+    font-size: 1.5rem;
+}
+
+.big-white-panel-wrapper {
+    /* centers the big white panel */
+    
+    display: flex;
+    justify-content: center;
+}
+
+.big-white-panel {
+    margin: 0;
+    width: 56rem;
+    height: 38rem;
+    margin-bottom: 6rem;
+    border-radius: 1.5rem;
+    background-color: white;
+    transform: translateY(max(3rem, calc(50vh - 50%)));
+    -webkit-box-shadow: 0px 31px 38px -18px rgba(0,0,0,0.2); 
+    box-shadow: 0px 31px 38px -18px rgba(0,0,0,0.2);
+}
+
+.content-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+/* SIDENAV */
+
+.sidenav-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #eff2fc;
+    border-bottom-left-radius: 1.5rem;
+    border-top-left-radius: 1.5rem;
+}
+
+.sidenav-tabs-wrapper {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
+    width: 100%;
+    padding-top: 1.7rem;
+    
+    flex-direction: column;
+}
+
+.sidenav-tab-wrapper {
+    margin: 1rem 0 1rem 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    width: auto;
+    cursor: pointer;
+}
+
+.sidenav-tab-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.sidenav-tab-label {
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.sidenav-logo-title {
+    margin: 2rem 1rem -3px 1rem;
+    width: 77px;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #6287fa;
+}
+
+.sidenav-logo-subtitle {
+    margin-top: 0rem;
+    font-size: 0.55rem;
+    font-weight: 300;
+}
+
+
+
+
+/* PAGE CONTENT */
+
+.page-body-wrapper {
+    flex-grow: 1;
+    height: 100%;
+    background-color: white;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-body-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+}
+
+
+/* HEADER */
+
+.page-header-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 1px #eff2fc;
+}
+
+.page-header-left-wrapper {
+    display: flex;
+    height: 100%;
+    justify-content: left;
+    align-items: center;
+}
+
+.page-header-title {
+    margin: 2rem;
+    line-height: 1.6rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: black;
+}
+
+.page-header-divider {
+    margin: 2rem 0 2rem 0;
+    height: 1.6rem;
+    border: 1px solid #EAE9F9;
+    border-radius: 2px;
+}
+
+.page-header-caption {
+    margin-left: 2rem;
+    font-size: 0.8rem;
+    width: 10rem;
+    text-align: left;
+}
+
+.page-header-right-wrapper {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-header-energy-wrapper {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center; 
+   margin-right: 1rem;
+}
+
+.page-header-currency-wrapper {
+    display: flex;
+}
+
+.page-header-currency-text {
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    padding: 0.2rem 0.4rem 0.2rem 0.2rem;
+    border: 1px solid #EAE9F9;
+    height: 1.7rem;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.page-header-currency-add {
+    width: 0.8rem;
+    height: 1.7rem;
+    padding: 0.2rem 0.3rem 0.2rem 0.3rem;
+    font-size: 1.25rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    border: 1px solid #EAE9F9;
+    cursor: pointer;
+}
+
+.page-header-currency-add-hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
+.page-header-currency-add-hvr-grow:hover, .page-header-currency-add-hvr-grow:focus, .page-header-currency-add-hvr-grow:active {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+}
+
+.page-header-coin-mr {
+    margin-right: 2rem;
+}
+
+.page-header-energy-icon {
+    height: 1.5rem;
+}
+
+.page-header-coin-icon {
+    height: 1.3rem;
+    margin: 0 0.3rem 0 0.2rem;
+}
+
+.page-header-energy-cooldowntext {
+    height: 0.5rem;
+    font-size: 0.6rem;
+}
+
+.page-header-username {
+    font-weight: 700;
+    margin-right: 2rem;
+    font-size: 1.25rem;
+}
+
+
+
+/* LOGIN */
+
+.main-body {
+    display: flex;
+    width: 100%;
+    height: 60%;
+    justify-content: space-evenly;
+    margin-top: 1.5rem;
+}
+
+.login-card {
+    width: 15rem;
+    height: 18rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.875rem;
+    border-color: #F3F3F6;
+    border-style: solid;
+    border-width: 1px;
+    background-color: white;
+    box-shadow:  8px 8px 27px #cfcfcf,
+             -8px -8px 27px #ffffff;
+    transition: box-shadow .3s;
+    color: black;
+    padding-bottom: 1rem;
+}
+
+.login-card-item {
+    display: flex;
+    padding: 0.5rem 1.5rem 0rem 1.5rem;
+    align-items: center;
+    text-align: left;
+}
+
+.login-card:hover {
+    box-shadow: none;
+}
+
+.google-login-wrapper {
+    padding: 1rem;
+}
+
+.mr-1 {
+    margin-right: 1rem;
+}
+
+.gamemode-card {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    margin-top: 1rem;
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+
+/* ANSWER BOX TEST (DELETE LATER) */
+.answerbox-wrapper {
+    flex-grow: 1;
+    flex-basis: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.whitepanel-loading {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.whitepanel-approveddevice {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    padding: 3rem;
+}
+
+.whitepanel-approveddevice-continue {
+    background-color: #EA4335;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 0.3rem;
+    margin-top: 2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.whitepanel-tutorial {
+    color: #000;
+    text-decoration: none;
+}
+.whitepanel-tutorial.button {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: white;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.whitepanel-tutorial .button .icons {
+    font-size: 24px;
+    transition: 0.2s;
+}
+.whitepanel-tutorial.button .label-hidden {
+    max-width: 0;
+    opacity: 0;
+    white-space: nowrap;
+    transition: 0.2s;
+    font-size: 1.2rem;
+}
+.whitepanel-tutorial.button:hover .label-hidden {
+    max-width: 200px;
+    margin-left: 16px;
+    opacity: 1;
+}
+.whitepanel-tutorial-icon {
+    transform: scale(2);
+}
+
+.whitepanel-tutorial-2 {
+    color: #000;
+    text-decoration: none;
+}
+.whitepanel-tutorial-2.button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: white;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.whitepanel-tutorial-2 .button .icons {
+    font-size: 24px;
+    transition: 0.2s;
+}
+.whitepanel-tutorial-2.button .label-hidden {
+    max-width: 0;
+    opacity: 0;
+    white-space: nowrap;
+    transition: 0.2s;
+    font-size: 1.2rem;
+}
+.whitepanel-tutorial-2.button:hover .label-hidden {
+    max-width: 200px;
+    margin-left: 16px;
+    opacity: 1;
+}
+.whitepanel-tutorial-icon-2 {
+    transform: scale(2);
+}

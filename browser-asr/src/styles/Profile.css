@@ -1,0 +1,166 @@
+.profile-content-wrapper {
+    flex-grow: 1;
+    padding: 1rem;
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.profile-column {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
+    margin: 1rem;
+    flex-direction: column;
+}
+
+/* PUBLIC PROFILE CARD */
+.profile-profilecard-wrapper {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    border: 1px solid lightgrey;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.profile-profilecard-pfp {
+    height: 6.5rem;
+    width: 6.5rem;
+    margin-left: 1.4rem;
+    border-radius: 50%;
+    border: lightgrey;
+    background-color: lightgrey;
+}
+
+.profile-profilecard-text {
+    font-size: 1.3rem;
+}
+
+
+/* RATING */
+.profile-ratingcard-wrapper {
+    flex-grow: 2;
+    flex-basis: 0;
+    border-radius: 1rem;
+    background-color: white;
+    /* background-color: #EFF2FC; */
+}
+
+
+/* STATS */
+.profile-statscards-wrapper {
+    flex-grow: 5;
+    flex-basis: 0;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    border: 5px solid #EFF2FC;
+    background-color: white;
+    /* margin-bottom: 1rem; */
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-statscards-title-wrapper {
+    display: flex;
+    align-items: center;
+
+
+    width: 100%;
+    margin-top: -5px;
+    background-color: #EFF2FC;
+    padding: 0.5rem;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+    border: 5px solid #EFF2FC;
+    box-sizing: border-box;
+}
+
+.profile-statscards-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: -2px;
+    margin-left: 0.5rem;
+    color: #6287F7;
+}
+
+.profile-statscards-content-wrapper {
+    padding: 1rem;
+    flex-grow: 1;
+    flex-basis: 0;
+    overflow-y: scroll;
+}
+
+.profile-statscards-content-wrapper > * {
+    margin-bottom: 1rem;
+}
+
+.profile-statscards-content-wrapper > *:last-child {
+    margin-bottom: 0px;
+}
+
+.profile-statscard-wrapper {
+    width: auto;
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid #e1e7fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* HISTORY */
+.profile-historycards-wrapper {
+    flex-grow: 1;
+    flex-basis: 0;
+    border-radius: 1rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-historycard-wrapper {
+    height: 4rem;
+    width: 5.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 0.8rem;
+    background-color: #EFF2FC;
+    color: black;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+
+/* OTHER */
+.profile-comingsoon {
+    width: 100%;
+    height: 100%;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CHANGE PROFILE */
+.profile-changeprofile-pfp-wrapper {
+    flex-grow: 1;
+}
+
+/* GAME HISTORY */
+.profile-gamehistory-wrapper {
+    
+}
