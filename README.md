@@ -1,1 +1,1 @@
-# earudite-app
+# Earudite
