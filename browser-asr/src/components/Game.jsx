@@ -415,6 +415,8 @@ function Game() {
 
   // for HLS
   const [token, setToken] = useState("");
+console.log("TOKEN HERE =============================");
+	console.log(token);
   const [rid, setRid] = useState("");
   const [classifiable, setClassifiable] = useState(true);
 
@@ -471,17 +473,23 @@ function Game() {
     const hlsListener = (data) => {
       var div = document.getElementById("transcript-box");
       if (div) div.innerHTML = "";
-      // console.log(data["token"]);
-      // console.log(data["rid"]);
-      setToken(data["token"]);
-      setRid(data["rid"]);
+       console.log(data["token"]);
+	    console.log(state);
+      setToken(data["token"][state.question] + "," + state.question); //data["token"][state.question - 1]);
+       console.log(data["rid"]);
+      setRid(data["rid"][state.question]);
       setClassifiable(data["classifiable"]);
       setAnswerText("");
       setTotalTimeBeenSet(false);
     };
 
     const hlsPlayListener = (data) => {
-      var video = document.getElementById("hls");
+
+
+       console.log(data["rid"]);
+      
+
+	    var video = document.getElementById("hls");
       video.play();
     };
 

@@ -54,7 +54,7 @@ WORKDIR /gentle
 RUN pip3 install twisted
 RUN python3 setup.py develop
 RUN mkdir /SOURCE
-COPY . /SOURCE
+COPY ./requirements.txt /SOURCE/requirements.txt
 WORKDIR /SOURCE
 RUN pip3 install numpy==1.16.6
 
@@ -65,7 +65,7 @@ RUN ln -sf /usr/bin/llvm-config-10 /usr/bin/llvm-config
 RUN pip3 install llvmlite
 RUN pip3 install numba
 RUN pip3 install -r requirements.txt
-
+COPY . /SOURCE
 COPY ../secrets .
 EXPOSE 5110
 

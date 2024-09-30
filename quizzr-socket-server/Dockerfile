@@ -17,8 +17,10 @@ RUN apt-get update \
 RUN apt update -y && apt upgrade -y
 RUN apt install ffmpeg -y 
 RUN python3 -m pip install pydub
-COPY ./ ./
+COPY ./requirements.txt ./requirements.txt
 RUN python3 -m pip install -r requirements.txt
+
+COPY ./ ./
 COPY ../secrets /secrets
 EXPOSE 6571
 RUN mkdir answer-audios

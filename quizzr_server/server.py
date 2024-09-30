@@ -14,6 +14,8 @@ import time
 from copy import deepcopy
 from itertools import chain
 from sys import exit
+import sys
+sys.stderr = sys.stdout
 from datetime import datetime, timedelta
 from http import HTTPStatus
 from secrets import token_urlsafe
@@ -394,6 +396,7 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
                     log_msg=True
                 )
 
+            print("AUDIO FUNCTION", recordings, qb_ids)
             return pre_screen(recordings, rec_types, user_id, qb_ids, sentence_ids, diarization_metadata_list,
                               expected_answers, transcripts, correct_flags)
         elif request.method == "PATCH":
@@ -789,6 +792,9 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
         :param blob_path: The path to a Firebase Cloud Storage object (or an audio ID)
         :return: A response containing the bytes of the audio file
         """
+
+
+        print("BACKWARDS COMPATIBLE AUDIO FUNCTION", blob_path)
         if "/" in blob_path:
             return retrieve_audio_file(blob_path)
         else:
@@ -1577,6 +1583,8 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
         else:
             res = audio_doc["vtt"]
 
+        print("VTT", res)
+
         response = make_response(bytes(res, "utf-8"))
         response.headers["Content-Type"] = "application/octet-stream"
         return response
@@ -2121,6 +2129,7 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
         cursor = qtpm.rec_questions.aggregate(pipeline)
         questions = []
         for doc in cursor:
+            print(doc)
             doc["qb_id"] = doc.pop("_id")
             doc["audio"] = _pick_audio(doc["audio"])
             questions.append(doc)
@@ -2655,7 +2664,9 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
     def _pick_audio(recs: list):
         weights = []
         rec_choices = []  # Segmented recordings are treated as one item
+        print(recs)
         for rec in recs:
+            print("====", rec)
             if "sentenceId" not in rec or rec["sentenceId"] == 0 or "tokenizationId" not in rec or rec["tokenizationId"] == 0:
                 rec_choices.append(rec)
 

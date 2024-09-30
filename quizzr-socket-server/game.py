@@ -7,6 +7,8 @@ import recordings_database as rd
 import os
 import copy
 import wave
+import sys
+sys.stdout = sys.stderr
 # from inference.classify import classify_and_upload
 
 # os.environ.get("HLS_HANDSHAKE") = "Lt`cw%Y9sg*bJ_~KZ#;|rbfI)nx[r5"
@@ -84,6 +86,8 @@ class Game:
                 params={"batchSize": self.questions_num * self.rounds_num},
                 headers={"Authorization": self.auth_token},
             ).json()["results"]
+
+            print("raw_questions", raw_questions, self.questions_num, self.rounds_num)
             self.questions = []  # id, qb_id, time length
             for question in raw_questions:
                 final_vtt = requests.get(
@@ -118,7 +122,7 @@ class Game:
             print("Expiry time: " + str(expiry_time))
 
             try:
-                print([i[0] for i in self.questions])
+                print("AUDIO HERE???", [i[0] for i in self.questions])
                 hls_response = requests.post(
                     os.environ.get("HLS_URL") + "/api/batch",
                     data={
@@ -199,10 +203,15 @@ class Game:
             self.recording_json = {}
 
             questions_ptr = 0
+
+            print(self.questions)
             for i in range(self.rounds_num):
+                print("ROUNDNUM", i)
                 round1 = []
                 answering_ids1 = []
                 for j in range(self.questions_num):
+                    print("questions_ptr", questions_ptr)
+                    print("self.questions[questions_ptr]", self.questions[questions_ptr])
                     round1.append(self.questions[questions_ptr][2])
                     answering_ids1.append(self.questions[questions_ptr][1])
                     questions_ptr += 1
