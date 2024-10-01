@@ -95,7 +95,7 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
     default_config = {
         "UNPROC_FIND_LIMIT": 32,
         "DATABASE": "QuizzrDatabase",
-        "BLOB_ROOT": "production_new_long",
+        "BLOB_ROOT": "production_new_long_music",
         # "BLOB_NAME_LENGTH": 32,
         "Q_ENV": 'production', #PROD_ENV_NAME,
         "SUBMISSION_FILE_TYPES": ["wav", "json", "vtt", "wav.aes"],
