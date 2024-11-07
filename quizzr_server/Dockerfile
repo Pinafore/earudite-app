@@ -8,8 +8,7 @@ RUN DEBIAN_FRONTEND=noninteractive && \
 		libstdc++-6-dev zlib1g-dev \
 		automake autoconf libtool \
 		git subversion \
-		libatlas3-base \
-		nvidia-cuda-dev \
+		#libatlas3-base \
 		ffmpeg \
 		python3 python3-dev python3-pip \
 		python python-dev python-pip \
@@ -21,27 +20,27 @@ WORKDIR /gentle/ext
 
 ARG OPENFST_VERSION=1.6.7
 RUN wget http://www.openfst.org/twiki/pub/FST/FstDownload/openfst-${OPENFST_VERSION}.tar.gz
-RUN tar -xvf openfst-${OPENFST_VERSION}.tar.gz -C /
+RUN tar --no-same-owner -xvf openfst-${OPENFST_VERSION}.tar.gz -C /
 RUN mkdir -p /openfst-deb
 #
-WORKDIR /openfst-${OPENFST_VERSION}
-RUN ./configure \
-        --enable-static=yes \
-        --enable-shared=no \
-        --with-pic=yes \
-        --enable-far \
-        --enable-python
+#WORKDIR /openfst-${OPENFST_VERSION}
+#RUN ./configure \
+#        --enable-static=yes \
+#        --enable-shared=no \
+#        --with-pic=yes \
+#        --enable-far \
+#        --enable-python
 
 
-RUN make
-RUN make install
+#RUN make
+#RUN make install
 
 RUN apt-get install sox -y
-RUN /gentle/ext/kaldi/tools/extras/install_mkl.sh
+#RUN /gentle/ext/kaldi/tools/extras/install_mkl.sh
 
-RUN export MAKEFLAGS=' -j8' &&  cd /gentle/ext && \
-	./install_kaldi.sh && \
-	make depend && make && rm -rf kaldi *.o
+#RUN export MAKEFLAGS=' -j8' &&  cd /gentle/ext && \
+#	./install_kaldi.sh && \
+#	make depend && make && rm -rf kaldi *.o
 
 
 
@@ -50,9 +49,9 @@ RUN export MAKEFLAGS=' -j8' &&  cd /gentle/ext && \
 
 
 #ADD . /gentle
-WORKDIR /gentle
-RUN pip3 install twisted
-RUN python3 setup.py develop
+#WORKDIR /gentle
+#RUN pip3 install twisted
+#RUN python3 setup.py develop
 RUN mkdir /SOURCE
 COPY . /SOURCE
 WORKDIR /SOURCE

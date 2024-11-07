@@ -2,7 +2,7 @@ import string
 from datetime import datetime, timedelta
 from typing import Tuple, Iterable
 
-from gentle import transcription
+#from gentle import transcription
 
 
 def aligned_word_to_vtt_cue(word_entry: transcription.Word, speaker_name="Speaker 0"):
