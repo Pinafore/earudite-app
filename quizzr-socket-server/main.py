@@ -23,7 +23,7 @@ app = Flask(__name__)
 CORS(app)
 firebase_app = initialize_app()
 app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY")
-socketio = SocketIO(app, cors_allowed_origins="*", logger=True)
+socketio = SocketIO(app, cors_allowed_origins="https://earudite.umiacs.umd.edu", logger=True)
 
 # SHARED BETWEEN THREADS
 current_lobby = {}  # UID : room name

@@ -2,21 +2,21 @@ services:
   client:
     build: browser-asr
     environment:
-      - REACT_APP_PUBLIC_DATAFLOW_URL=http://${PUBLIC_IP}:5110
-      - REACT_APP_PUBLIC_SOCKET_URL=http://${PUBLIC_IP}:6571
-      - REACT_APP_PUBLIC_SOCKETFLASK_URL=http://${PUBLIC_IP}:6800
-      - REACT_APP_PUBLIC_HLS_URL=http://${PUBLIC_IP}:4440
+      - REACT_APP_PUBLIC_DATAFLOW_URL=https://quizzrserver-${PUBLIC_IP}
+      - REACT_APP_PUBLIC_SOCKET_URL=https://quizzrsocketserver-${PUBLIC_IP}
+      - REACT_APP_PUBLIC_SOCKETFLASK_URL=https://server-${PUBLIC_IP}
+      - REACT_APP_PUBLIC_HLS_URL=https://hls-${PUBLIC_IP}
     ports:
-      - 3000:3000
+            - 8443:3000
     networks:
       - ear-net
 
-  authroute:
-    build: reroute
-    ports:
-      - 8443:8443
-    networks:
-      - ear-net
+  #authroute:
+  #  build: reroute
+  #  ports:
+  #    - 8443:8443
+  #  networks:
+  #    - ear-net
 
   server:
     build: server
@@ -37,11 +37,11 @@ services:
     environment:
       -  GOOGLE_APPLICATION_CREDENTIALS=secrets/firebase_storage_key.json
       -  Q_INST_PATH=/SOURCE
-      -  BACKEND_URL=http://quizzrserver:5110/
+      -  BACKEND_URL=https://quizzrserver-${PUBLIC_IP}/
       -  CONNECTION_STRING=${MONGO_CONNECTION_STRING}
       -  DF_SERVER_AUDIO_PSWD=qwert12345
-      -  HLS_URL=http://hls:4440
-      -  FORCED_DECODING=http://forceddecoding:5000
+      -  HLS_URL=https://hls-${PUBLIC_IP}
+      -  FORCED_DECODING=https://clipwww02.umiacs.umd.edu:5000
     ports:
       - 6571:6571
     networks:
@@ -70,25 +70,14 @@ services:
       -  CONNECTION_STRING=${MONGO_CONNECTION_STRING}
       -  DF_SERVER_AUDIO_PSWD=qwert12345
       -  HLS_URL=http://hls:4440
-      -  DATAFLOW_URL_AUDIO=http://${PUBLIC_IP}:5110/audio
-      -  DATAFLOW_URL_VTT=http://${PUBLIC_IP}:5110/hls/vtt
+      -  DATAFLOW_URL_AUDIO=https://quizzrserver-${PUBLIC_IP}/audio
+      -  DATAFLOW_URL_VTT=https://quizzrserver-${PUBLIC_IP}/hls/vtt
     ports:
       - 4440:4440
     networks:
       - ear-net
 
-  kaldistage:
-    build: kaldistage
 
-  forceddecoding:
-    build: forced_decoding
-    ports:
-      - 5000:5000
-    depends_on:
-      - kaldistage
-    networks:
-      - ear-net
-
-
+  
 networks:
   ear-net:

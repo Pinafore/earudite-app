@@ -26,7 +26,7 @@ import jsonschema.exceptions
 import pymongo.errors
 from firebase_admin.auth import UserNotFoundError
 
-import vtt_conversion
+#import vtt_conversion
 import werkzeug.datastructures
 from firebase_admin import auth
 from flask_limiter import Limiter
@@ -43,11 +43,16 @@ from werkzeug.exceptions import abort
 
 from ratelimiter import RateLimiter
 from mail_lib import Mailer
-import rec_processing
+#import rec_processing
 import sv_util
 from sv_api import QuizzrAPISpec
 from tpm import QuizzrTPM
 from sv_errors import UsernameTakenError, ProfileNotFoundError, MalformedProfileError
+
+import string
+from datetime import datetime, timedelta
+from typing import Tuple, Iterable
+
 
 logging.basicConfig(level=os.environ.get("QUIZZR_LOG") or "INFO")
 
@@ -55,6 +60,54 @@ DEV_ENV_NAME = "production"
 PROD_ENV_NAME = "production"
 TEST_ENV_NAME = "testing"
 
+
+def datetime_to_vtt_timestamp(dt: datetime):
+    return f"{dt.minute:02}:{dt.second}.{int(dt.microsecond / 1e+3):03}"
+
+def offset_cues(vtt_input, seconds):
+    """
+    Source: https://www.webucator.com/article/fixing-webvtt-times-with-python/
+    Fixes times in WebVTT by adding the passed-in seconds to all the timestamps.
+
+        Args:
+            vtt_input (str): The text of the WebVTT
+            seconds (float): The seconds to add. Use negative number to subtract.
+        """
+    td = timedelta(seconds=seconds)
+    dt_format = "%M:%S.%f"
+    vtt_output = ""
+
+    for line in vtt_input.splitlines():
+
+        if "-->" not in line:
+            # This line doesn't have times. Just append it as is.
+            vtt_output += line + "\n"
+            continue
+
+        start, end = line.split(" --> ")
+        start = start.strip()
+        end = end.strip()
+
+        start_time_fixed = datetime.strptime(start, dt_format) + td
+        end_time_fixed = datetime.strptime(end, dt_format) + td
+
+        start_time = datetime_to_vtt_timestamp(start_time_fixed)
+        end_time = datetime_to_vtt_timestamp(end_time_fixed)
+
+        vtt_output += f"{start_time} --> {end_time}\n"
+
+    return vtt_output
+
+def merge_vtts(vtts, durations):
+    vtt_line_sets = [vtt.splitlines() for vtt in vtts]
+    header = vtts[0].splitlines()[0:2]
+    vtt_bodies = []
+    cumulative_duration = 0
+    for vtt_lines, duration in zip(vtt_line_sets, durations):
+        vtt_bodies.append(offset_cues("\n".join(vtt_lines[2:]), cumulative_duration))
+        cumulative_duration += duration
+
+    return "\n".join([*header, *vtt_bodies]).strip()
 
 # TODO: Re-implement QuizzrWatcher through the Celery framework for Flask.
 def create_app(test_overrides: dict = None, test_inst_path: str = None, test_storage_root: str = None):
@@ -228,6 +281,7 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
 
     app.logger.debug("Instantiating process...")
     prescreen_results_queue = multiprocessing.Queue()
+    """
     qw_process = multiprocessing.Process(target=rec_processing.start_watcher, kwargs={
         "db_name": app_conf["DATABASE"],
         "tpm_config": app_conf,
@@ -241,14 +295,15 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
         "logger": app.logger.getChild("prescreen")
     })
     qw_process.daemon = True
+    """
     app.logger.debug("Finished instantiating process")
     app.logger.debug("Starting process...")
 
-    app_attributes["qwStartTime"] = time.time()
-    qw_process.start()
-    app_attributes["qwPid"] = qw_process.pid
-    app.logger.debug(f"qwPid = {app_attributes['qwPid']}")
-    app.logger.info("Started pre-screening program")
+    #app_attributes["qwStartTime"] = time.time()
+    #qw_process.start()
+    #app_attributes["qwPid"] = qw_process.pid
+    #app.logger.debug(f"qwPid = {app_attributes['qwPid']}")
+    #app.logger.info("Started pre-screening program")
 
     # System to send email addresses to new users.
     def _initialize_mailer():
@@ -1579,7 +1634,7 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
                 print("NEW DOC")
                 vtts.append(doc["vtt"])
                 durations.append(doc["duration"])
-            res = vtt_conversion.merge_vtts(vtts, durations)
+            res = merge_vtts(vtts, durations)
         else:
             res = audio_doc["vtt"]
 
