@@ -3,7 +3,6 @@ package api
 import (
 	"fmt"
 	"strings"
-	"strconv"
 	"github.com/Mshivam2409/hls-streamer/internal/db"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -32,14 +31,18 @@ func HTTPListen() error {
 app.Use(func(c *fiber.Ctx) error {
 	tok1 := c.Get("x-gostreamer-token") 
 
+	fmt.Println(tok1)
 	tok_parts := strings.Split(tok1, ",")
 	tok := tok_parts[0]
+	fmt.Println(tok_parts)
+	fmt.Println(tok)
 
 
 	if len(tok) == 21 { 
 		
 		uri := strings.Split(c.Path(), "/") 
-		
+		fmt.Println(uri)
+	
 		if len(uri) < 2 {
 			return c.SendStatus(fiber.StatusUnauthorized) 
 		}
@@ -47,7 +50,11 @@ app.Use(func(c *fiber.Ctx) error {
 		path1 := uri[len(uri)-2] 
 		path := path1 
 
+		fmt.Println(path1, path)
+
 		rid, err := db.GoStreamer.BadgerClient.Get(tok) 
+		fmt.Println(rid)
+		fmt.Println("=======")
 		if err != nil {
 			return c.SendStatus(fiber.StatusUnauthorized)
 		}

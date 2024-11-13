@@ -471,13 +471,23 @@ console.log("TOKEN HERE =============================");
     };
 
     const hlsListener = (data) => {
+	    console.log(data);
       var div = document.getElementById("transcript-box");
       if (div) div.innerHTML = "";
        console.log(data["token"]);
 	    console.log(state);
-      setToken(data["token"][state.question] + "," + state.question); //data["token"][state.question - 1]);
+
+	    var i = 0;
+	    while(i < data["token"].length && data["token"][i] !== "") {
+		    i++;
+	    }
+
+	    console.log(i);
+	    console.log(data["rid"]);
+
+      setToken(data["token"][i - 1] + "," + i); //data["token"][state.question - 1]);
        console.log(data["rid"]);
-      setRid(data["rid"][state.question]);
+      setRid(data["rid"][i - 1]);
       setClassifiable(data["classifiable"]);
       setAnswerText("");
       setTotalTimeBeenSet(false);
@@ -536,6 +546,8 @@ console.log("TOKEN HERE =============================");
   // const [hls, isParsed] = 
   useQuestion({
     onCue: (cue) => {
+
+
       var div = document.getElementById("transcript-box");
       let splitarr = div.innerHTML.split(" ");
       if (cue === splitarr[splitarr.length - 1]) {
@@ -786,3 +798,4 @@ console.log("TOKEN HERE =============================");
 }
 
 export default Game;
+

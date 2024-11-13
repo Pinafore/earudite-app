@@ -11,8 +11,6 @@ import sys
 sys.stdout = sys.stderr
 # from inference.classify import classify_and_upload
 
-# os.environ.get("HLS_HANDSHAKE") = "Lt`cw%Y9sg*bJ_~KZ#;|rbfI)nx[r5"
-# export HLS_os.environ.get("HLS_HANDSHAKE")="Lt\`cw%Y9sg*bJ_~KZ#;|rbfI)nx[r5"
 from pydub import AudioSegment
 from pydub.utils import mediainfo
 
@@ -404,6 +402,15 @@ class Game:
                             team[username] += 10
                 self.socketio.emit("answeredcorrectly", {}, to=self.gamecode)
             else:
+
+
+                self.active_question[1] = (
+                    time.time()
+                    - self.active_question[1]
+                    - self.rounds[self.round - 1][self.question - 1]
+                ) # DELETE ME
+
+
                 if self.teams == 0:
                     self.points[username] -= 5
                 else:
@@ -527,6 +534,13 @@ class Game:
                             team[username] += 10
                 self.socketio.emit("answeredcorrectly", {}, to=self.gamecode)
             else:
+
+                #self.active_question[1] = (
+                #    time.time()
+                #    - self.active_question[1]
+                #    - self.rounds[self.round - 1][self.question - 1]
+                #) # DELETE ME
+
                 if self.teams == 0:
                     self.points[username] -= 5
                 else:

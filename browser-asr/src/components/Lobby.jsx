@@ -212,10 +212,8 @@ function Lobby() {
                         Game Settings (Custom)
                     </div>
                     <div class="lobby-gamesettings-list-wrapper">
-                        <div class="lobby-gamesettings-setting-wrapper">
-                            <div>Max players</div>
-                            <div>{gameSettings['max_players']}</div>
-                        </div>
+
+                        <div hidden>
                         <div class="lobby-gamesettings-setting-wrapper">
                             <div>Teams</div>
                             <div class="lobby-gamesettings-hor-flex">
@@ -231,6 +229,8 @@ function Lobby() {
                                 </div>
                             </div>
                         </div>
+                        </div>
+
                         <div class="lobby-gamesettings-setting-wrapper">
                             <div>Rounds</div>
                             <div>{gameSettings['rounds']}</div>
@@ -292,7 +292,8 @@ function Lobby() {
                             </div>
                         </div>
                         <div class="lobby-gamesettings-setting-wrapper">
-                            <div>Buzz time after questions (s)</div>
+
+                        <div hidden>
                             <div class="lobby-gamesettings-hor-flex">
                                 <div class="lobby-gamesettings-slider-wrapper">
                                     <Slider
@@ -309,6 +310,7 @@ function Lobby() {
                                     />
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                     <div class="lobby-gamesettings-buttons-wrapper">
