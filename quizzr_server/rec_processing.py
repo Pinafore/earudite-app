@@ -19,7 +19,7 @@ import soundfile as sf
 from func_timeout import func_timeout, FunctionTimedOut
 from pymongo.database import Database
 
-#import forced_alignment
+import forced_alignment
 import vtt_conversion
 from tpm import QuizzrTPM
 
@@ -486,7 +486,7 @@ class QuizzrProcessor:
         :param file_path: The path to the WAV file
         :param r_transcript: The transcript to use as a reference
         :return: A tuple containing the accuracy and the VTT
-        
+        """
         alignment = forced_alignment.get_forced_alignment(file_path, r_transcript)
         words = alignment.words
         total_words = len(words)
@@ -498,9 +498,9 @@ class QuizzrProcessor:
         realigned_alignment = vtt_conversion.realign_alignment(alignment)
         vtt = vtt_conversion.gentle_alignment_to_vtt(realigned_alignment.words)
         self.logger.debug(f"vtt = {vtt}")
-        """
-        return ['testing'], 1, "testing" 
-        #return aligned_words, total_words, vtt
+
+        #return ['testing'], 1, "testing" 
+        return aligned_words, total_words, vtt
 
     def process_transcript(self, t: str) -> List[str]:
         """
