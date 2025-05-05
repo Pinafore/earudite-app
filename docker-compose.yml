@@ -1,22 +1,29 @@
 services:
+  pedant-service:
+    build: pedant-service
+    ports:
+      - "5000:5000"
+    networks:
+      - ear-net
+  
   client:
     build: browser-asr
     environment:
-      - REACT_APP_PUBLIC_DATAFLOW_URL=http://${PUBLIC_IP}:5110
-      - REACT_APP_PUBLIC_SOCKET_URL=http://${PUBLIC_IP}:6571
-      - REACT_APP_PUBLIC_SOCKETFLASK_URL=http://${PUBLIC_IP}:6800
-      - REACT_APP_PUBLIC_HLS_URL=http://${PUBLIC_IP}:4440
+      - REACT_APP_PUBLIC_DATAFLOW_URL=https://quizzrserver.${PUBLIC_IP}
+      - REACT_APP_PUBLIC_SOCKET_URL=https://quizzrsocketserver.${PUBLIC_IP}
+      - REACT_APP_PUBLIC_SOCKETFLASK_URL=https://server.${PUBLIC_IP}
+      - REACT_APP_PUBLIC_HLS_URL=https://hls.${PUBLIC_IP}
     ports:
       - 3000:3000
     networks:
       - ear-net
 
-  authroute:
-    build: reroute
-    ports:
-      - 8443:8443
-    networks:
-      - ear-net
+        #authroute:
+    #  build: reroute
+      #  ports:
+      #  - 443:8443
+        #  networks:
+      #      - ear-net
 
   server:
     build: server
@@ -70,24 +77,24 @@ services:
       -  CONNECTION_STRING=${MONGO_CONNECTION_STRING}
       -  DF_SERVER_AUDIO_PSWD=qwert12345
       -  HLS_URL=http://hls:4440
-      -  DATAFLOW_URL_AUDIO=http://${PUBLIC_IP}:5110/audio
-      -  DATAFLOW_URL_VTT=http://${PUBLIC_IP}:5110/hls/vtt
+      -  DATAFLOW_URL_AUDIO=https://quizzrserver.${PUBLIC_IP}/audio
+      -  DATAFLOW_URL_VTT=https://quizzrserver.${PUBLIC_IP}/hls/vtt
     ports:
       - 4440:4440
     networks:
       - ear-net
 
-  kaldistage:
-    build: kaldistage
+  #kaldistage:
+  #  build: kaldistage
 
-  forceddecoding:
-    build: forced_decoding
-    ports:
-      - 5000:5000
-    depends_on:
-      - kaldistage
-    networks:
-      - ear-net
+  #forceddecoding:
+  #  build: forced_decoding
+  #  ports:
+  #    - 5000:5000
+  #  depends_on:
+  #    - kaldistage
+  #  networks:
+  #    - ear-net
 
 
 networks:

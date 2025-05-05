@@ -9,6 +9,7 @@ class Lobby:
             "teams": 0,  # Number of teams
             "max_players": 8,  # maximum total number of players in lobby
             "rounds": 1,  # number of rounds
+            "category": 0,
             "questions_num": 3,  # number of questions per round
             "gap_time": 5,  # time between questions
             "post_buzz_time": 5  # time after questions players can still buzz

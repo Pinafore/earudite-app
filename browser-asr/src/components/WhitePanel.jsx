@@ -90,7 +90,7 @@ function LoginBody() {
                     // Handle error
                   });
                 setScreen(-1);
-                document.location.hash = "dashboard";
+                document.location.hash = "play";
             } else {
                 return;
             }
@@ -291,7 +291,7 @@ function BigWhitePanel() {
             } else if (windowhash === "tutorial") {
                 setScreen(8);
             } else {
-                setScreen(2);
+                setScreen(3);
                 // setScreen(6); // in game
                 // setScreen(7);
             }
@@ -378,7 +378,7 @@ function BigWhitePanel() {
                 <div class="big-white-panel">
                     <div class="content-wrapper">
                         <div class="whitepanel-approveddevice">
-                            Please use Chrome 73+ and/or a device with an appropriate width-height ratio for the best experience! Other browsers may not be supported.
+                            Please use Chrome 73+ and/or a device with an appropriate width-height ratio for the best experience! Other browsers may not be supported. We currently do not support mobile devices.
                             <div class="whitepanel-approveddevice-continue" onClick={()=>{setApprovedDevice(true)}}>
                                 PLAY ANYWAYS
                             </div>

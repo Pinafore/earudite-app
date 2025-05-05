@@ -54,6 +54,27 @@ logging.basicConfig(level=os.environ.get("QUIZZR_LOG") or "INFO")
 DEV_ENV_NAME = "production"
 PROD_ENV_NAME = "production"
 TEST_ENV_NAME = "testing"
+import requests
+def pendant_answer(candidate_answer, reference_answer, question):
+    url = "http://pedant-service:5000/evaluate"
+    payload = {
+        "reference_answer": [reference_answer],
+        "candidate_answer": candidate_answer,
+        "question": question,
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    try:
+        response = requests.post(url, json=payload, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+        # Return True or False based on the "match" field in the response
+        return data.get("match", False)
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}")
+        return False
 
 
 # TODO: Re-implement QuizzrWatcher through the Celery framework for Flask.
@@ -95,7 +116,7 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
     default_config = {
         "UNPROC_FIND_LIMIT": 32,
         "DATABASE": "QuizzrDatabase",
-        "BLOB_ROOT": "production_new_long",
+        "BLOB_ROOT": "production_new_long_music",
         # "BLOB_NAME_LENGTH": 32,
         "Q_ENV": 'production', #PROD_ENV_NAME,
         "SUBMISSION_FILE_TYPES": ["wav", "json", "vtt", "wav.aes"],
@@ -716,6 +737,8 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
         app.logger.info(f"Logged {len(errors)} warning messages")
         return results
 
+
+
     @app.route("/answer", methods=["GET"])
     def check_answer():
         """Check if an answer is correct using approximate string matching."""
@@ -756,9 +779,13 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
                 log_msg=True
             )
 
-        answer_similarity = fuzz.token_set_ratio(user_answer, correct_answer)
-        _debug_variable("answer_similarity", answer_similarity)
-        return {"correct": answer_similarity >= app.config["MIN_ANSWER_SIMILARITY"]}
+        #answer_similarity = fuzz.token_set_ratio(user_answer, correct_answer)
+        #_debug_variable("answer_similarity", answer_similarity)
+
+        pen_correct = pendant_answer(user_answer, correct_answer, "Name the thing.")
+
+        return {"correct": pen_correct}
+        #return {"correct": answer_similarity >= app.config["MIN_ANSWER_SIMILARITY"]}
 
     @app.route("/answer_full/<int:qid>", methods=["GET"])
     def get_answer(qid):
@@ -2096,11 +2123,13 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
 
         return {"results": history[start:end]}
 
-    @app.route("/question", methods=["GET"])
-    def pick_game_question():
+    @app.route("/question/<category>", methods=["GET"])
+    def pick_game_question(category):
         """Retrieve a batch of randomly-selected questions and attempt to retrieve the associated recordings with the
         best evaluations possible without getting recordings from different users in the same question."""
         categories = request.args.getlist("category")
+        #print(categories)
+        print(category)
         difficulty_range_arg = request.args.get("difficultyRange")
         batch_size = int(request.args.get("batchSize") or 1)
         pipeline = [
@@ -2117,8 +2146,20 @@ def create_app(test_overrides: dict = None, test_inst_path: str = None, test_sto
             }}
         ]
         query = {}
-        if categories:
-            query['category'] = {'$in': categories}
+        #if categories:
+
+        cat = {
+            '0': 'Cultural/Geographic', 
+            '1': 'Musical Elements', 
+            '2': 'Music Identification', 
+            '3': 'Musical Performance', 
+            '4': 'Media Content', 
+            '5': 'Character/Person', 
+            '6': 'Sound Identification',
+            '7': 'Other'
+        }
+
+        query['category'] = {'$in': [cat[str(category)]]}
 
         if difficulty_range_arg:
             difficulty_range = [int(num) for num in re.split(r",\s*", difficulty_range_arg)]

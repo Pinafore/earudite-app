@@ -64,6 +64,7 @@ class Game:
         self.gamemode = lobby.gamemode  # game type
         self.rounds_num = lobby.settings["rounds"]  # total number of rounds
         self.questions_num = lobby.settings["questions_num"]  # questions per round
+        self.category = lobby.settings["category"]
         self.tiebreaker = "random"  # method to break ties
         self.buzz_time = 15  # time a player is given to answer after buzzing
         self.post_buzz_time = lobby.settings[
@@ -78,9 +79,10 @@ class Game:
         self.socketio = socketio
         self.hls_rids = []
         self.hls_tokens = []
+        print(self.category)
         try:
             raw_questions = requests.get(
-                os.environ.get("BACKEND_URL") + "/question",
+                os.environ.get("BACKEND_URL") + "/question/" + str(self.category),
                 params={"batchSize": self.questions_num * self.rounds_num},
                 headers={"Authorization": self.auth_token},
             ).json()["results"]
@@ -232,14 +234,14 @@ class Game:
     # round #, question #, question time remaining, buzz time remaining, gap time remaining
     def gamestate(self):
         if not self.active_game:  # game is over
-            return [self.active_game, 0, 0, 0, 0, 0, 0, self.points]
+            return [self.active_game, 0, 0, 0, 0, 0, 0, self.points, self.prev_answers]
         if self.active_gap[0]:  # between questions
             # if gap time is over, move to question
             if self.get_gap_time() < 0:
                 question_idx = (
                     ((self.round - 1) * self.questions_num) + self.question - 1
                 )
-                self.prev_answers = [] # clear previous answers
+                #self.prev_answers = [] # clear previous answers
                 print("IN GAME STATE RIDS", self.hls_rids)
                 print("IN GAME STATE TOKENS", self.hls_tokens)
                 self.socketio.emit(

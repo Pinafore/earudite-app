@@ -386,6 +386,7 @@ function Game() {
       socket: useRecoilValue(SOCKET),
       points: new Map([[username, 0]]),
       lobby: useRecoilValue(LOBBY_CODE),
+      between: true
     }
   );
     
@@ -415,8 +416,8 @@ function Game() {
 
   // for HLS
   const [token, setToken] = useState("");
-console.log("TOKEN HERE =============================");
-	console.log(token);
+	//console.log("TOKEN HERE =============================");
+	//console.log(token);
   const [rid, setRid] = useState("");
   const [classifiable, setClassifiable] = useState(true);
 
@@ -581,6 +582,7 @@ console.log("TOKEN HERE =============================");
   }
 
   if (gameScreen === "ingame") {
+	  
     return (
       <React.Fragment>
         {showConffeti && <Confetti width={width} height={height} />}
@@ -609,7 +611,7 @@ console.log("TOKEN HERE =============================");
                           barData={[{ width: 100 }]}
                           progressData={[
                             Math.round(
-                              (state.gapTime / gameSettings.gap_time) *
+                              (state.gapTime / gameSettings.rgap_time) *
                                 100
                             ),
                           ]}
@@ -680,7 +682,7 @@ console.log("TOKEN HERE =============================");
                     "game-transcriptbox " +
                     (state.buzzer !== "" ? "game-buzzedin-blur" : "")
                   }
-                ></div>
+                >Audio will begin soon...</div>
 
                 <div class="game-menubox">
                   <AnswerBox
@@ -719,7 +721,7 @@ console.log("TOKEN HERE =============================");
       for (const key in state.points) {
         pointsArray.push([key, state.points[key]]);
       }
-
+console.log(state.prevAnswers);
       return (
         <div class="big-white-panel-wrapper">
           <GameRatePopup state={state} finished={true}/>
@@ -731,6 +733,10 @@ console.log("TOKEN HERE =============================");
                   <PostgamePlayerCard name={uname} points={pts} />
                 ))}
               </div>
+
+	       <div class="game-right-wrapper">
+	      <PreviousAnswers answers={state.prevAnswers}/>
+</div>
               <div
                 onClick={() => {
                   state.socket.emit("leavelobby", {
@@ -777,6 +783,7 @@ console.log("TOKEN HERE =============================");
                   <PostgamePlayerCard name={uname} points={pts} />
                 ))}
               </div>
+              <PreviousAnswers answers={state.prevAnswers}/>
               <div
                 onClick={() => {
                   state.socket.emit("leavelobby", {

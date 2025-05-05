@@ -102,6 +102,7 @@ const GAMESETTINGS = atom({
         'rounds': 3,
         'questions_num': 10,
         'gap_time': 10,
+	'cateogry': 0,
         'post_buzz_time': 5,
         // tiebreaker
         // topics

@@ -109,8 +109,8 @@ const gameSettingsList = [
         tiebreaker: "Tiebreaker question"
     }),
     new gameSettings({ // gamemode = 5 (Custom)
-        title: "Create Lobby",
-        description: "Start a new game!",
+        title: "Start Playing!",
+        description: "",
         cost: "Varies",
         maxPlayers: "2-8",
         teams: "2-4",
@@ -199,6 +199,7 @@ function StartCasualSoloLobbyButton(props) {
                 'rounds': data['rounds'],
                 'questions_num': data['questions_num'],
                 'gap_time': data['gap_time'],
+		'category': data['category'],
                 'post_buzz_time': data['post_buzz_time'],
             });
             setLobbyCode(data['code']);
@@ -266,7 +267,7 @@ function StartCustomLobbyButton() {
 
     return (
         <div class="play-gamemodecard-start play-hvr-grow" onClick={StartLobby}>
-            CREATE
+           NEW GAME 
         </div>
     )
 }
@@ -311,9 +312,9 @@ function JoinCustomLobbyCard(props) {
             lobby: text,
         });
     }
-
     return (
-        <div class="play-gamemodecard-wrapper">
+
+<div class="play-gamemodecard-wrapper">
             <div class="play-gamemodecard-pfp" style={{ backgroundImage: `url(${props.icon})` }}></div>
             <div class="play-gamemodecard-title">
                 Join a lobby!
@@ -324,7 +325,7 @@ function JoinCustomLobbyCard(props) {
                 JOIN
             </div>
         </div>
-    )
+    );
 }
 
 
@@ -363,11 +364,12 @@ function Play(props) {
                     </>
                 }
                 { gamemode === "custom" && // Custom
-                    <>
-                        <GamemodeCard icon={GamemodeIcon4} gamesettings={gameSettingsList[5]} gamemode="custom"/>
-                        <JoinCustomLobbyCard icon={GamemodeIcon7}/>
-                    </>
-                }
+    <>
+        <GamemodeCard icon={GamemodeIcon4} gamesettings={gameSettingsList[5]} gamemode="custom" />
+            </>
+
+
+		}
 
             </div>
         </div>

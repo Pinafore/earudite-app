@@ -26,10 +26,10 @@ function Player(props) {
 
     if(props.switchable) {
         return (
-            <div className={"lobby-players-player-wrapper " + (props.self ? "lobby-players-player-self" : "")}> 
+            <div className={"lobby-players-player-wrapper " + (props.self ? "lobby-players-player-self" : "")}>
                 <div class="lobby-players-player-wrapper-left">
                     {props.name}
-                    {props.self && 
+                    {props.self &&
                         <Tooltip
                             // options
                             title="This is you"
@@ -48,10 +48,11 @@ function Player(props) {
         )
     } else {
         return (
-            <div className={"lobby-players-player-wrapper " + (props.self ? "lobby-players-player-self" : "")}>           
+            <div className={"lobby-players-player-wrapper " + (props.self ? "lobby-players-player-self" : "")}>
+
                 <div class="lobby-players-player-wrapper-left">
                     {props.name}
-                    {props.self && 
+                    {props.self &&
                         <Tooltip
                             // options
                             title="This is you"
@@ -62,11 +63,11 @@ function Player(props) {
                             <PersonIcon style={{color: "blue", marginLeft: "0.25rem"}}/>
                         </Tooltip>
                     }
-                </div> 
+                </div>
             </div>
         )
     }
-    
+
 }
 
 // Taken from stack overflow, simply clones a JS object
@@ -118,7 +119,7 @@ function Lobby() {
 
     const initialGameSettings = clone(recoilGameSettings);
     console.log(recoilGameSettings);
-    
+
     // Game settings
     const [gameSettings, setGameSettings] = useReducer(
         (state, newState) => ({...state, ...newState}),
@@ -141,6 +142,7 @@ function Lobby() {
                 'rounds': data['rounds'],
                 'questions_num': data['questions_num'],
                 'gap_time': data['gap_time'],
+		'category': data['category'],
                 'post_buzz_time': data['post_buzz_time'],
             });
             setLobbyCode(data['code']);
@@ -178,7 +180,7 @@ function Lobby() {
             socket.off("lobbyloading", lobbyLoadingListener);
         }
     });
-    
+
 
     function leave() {
         socket.emit("leavelobby", {
@@ -234,7 +236,7 @@ function Lobby() {
                         <div class="lobby-gamesettings-setting-wrapper">
                             <div>Rounds</div>
                             <div>{gameSettings['rounds']}</div>
-    
+
                             {/* <div class="lobby-gamesettings-hor-flex">
                                 <div class="lobby-gamesettings-slider-wrapper">
                                     <Slider
@@ -280,7 +282,7 @@ function Lobby() {
                                         defaultValue={gameSettings['gap_time']}
                                         valueLabelDisplay="auto"
                                         step={1}
-                                        min={0}
+                                        min={3}
                                         max={30}
                                         value={gameSettings['gap_time']}
                                         onChange={(event, value) => {
@@ -291,6 +293,29 @@ function Lobby() {
                                 </div>
                             </div>
                         </div>
+
+
+
+	<div class="lobby-gamesettings-setting-wrapper">
+    <div>Category</div>
+    <div class="lobby-gamesettings-hor-flex">
+        <select 
+            value={gameSettings['category']} 
+            onChange={(event) => {
+                updateSettings({ 'category': parseInt(event.target.value) });
+            }}
+            className="lobby-gamesettings-dropdown"
+        >
+<option value={0}>Cultural/Geographic</option>
+<option value={1}>Musical Elements</option>
+<option value={2}>Music Identification</option>
+<option value={4}>Media Content</option>
+<option value={5}>Character/Person</option>
+<option value={6}>Sound Identification</option>
+	</select>
+    </div>
+</div>	
+
                         <div class="lobby-gamesettings-setting-wrapper">
 
                         <div hidden>
@@ -358,7 +383,7 @@ function Lobby() {
                             </div>
                         </div>
                     }
-                    
+
                 </div>
             </div>
         );
@@ -369,7 +394,7 @@ function Lobby() {
             </div>
         );
     }
-    
+
 }
 
 export default Lobby;

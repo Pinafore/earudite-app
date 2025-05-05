@@ -47,6 +47,7 @@ queues = {
 
 def only_connection(username): # checks if an incoming username is already actively in another lobby/game
     # return true if this is the user's only connection to lobbies/games
+    return True
     try:
         # Check if user is already in something
         if not (username in reverse_clients):

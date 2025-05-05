@@ -1,0 +1,5 @@
+flask
+qa-metrics
+regex
+tqdm
+nltk
